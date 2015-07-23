@@ -183,7 +183,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                     } else {
                         return $q.reject({authenticated: false});
                     }
-                } 
+                }
             },
             controller: function($scope, authCheck) {
                 $scope.$on('$viewContentLoaded', function() {   
