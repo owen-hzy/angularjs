@@ -8,7 +8,9 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "ngStorage", 
     "oc.lazyLoad",  
-    "ngSanitize"
+    "ngSanitize",
+    "ui.grid",
+    "ui.grid.selection"
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -113,28 +115,19 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
+MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 
-    /*$httpProvider.interceptors.push(['$q', '$state', '$localStorage', function($q, $state, $localStorage) {
+    /*$httpProvider.interceptors.push(function($q, $injector, $localStorage) {
         return {
-            'request': function (request) {
-                request.headers = request.headers || {};
-                if ($localStorage.token) {
-                    if (request.url.indexOf('/WebApi/api/protected') > 0) {
-                        request.headers.Authorization = 'Bearer ' + $localStorage.token;
-                    }     
-                }
-                return request;
-            },
             'responseError': function(response) {
-                if (response.status === 401 || response.status === 403) {
-                    $state.go('login');
+                if (response.status === 401) {
+                    delete $localStorage.token;
+                    $injector.get('$state').go('login');
                 }
                 return $q.reject(response);
             }
         };
-    }]);
-*/
+    });*/
 
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/");
@@ -199,6 +192,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', fun
                     $scope.credentials = {};
                     $scope.credentials.username = authCheck.name;
                     $scope.credentials.roles = authCheck.role;
+                    $scope.credentials.userId = authCheck.id;
                 });
             }
         })
@@ -243,14 +237,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', fun
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
-                            'assets/global/plugins/select2/select2.css',
-                            'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css',
-
-                            'assets/global/plugins/select2/select2.min.js',
-                            'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js',
-                            'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js',
-                            'assets/admin/pages/scripts/table-editable.js',
-
+                            'assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.css',          
+                            'assets/admin/pages/scripts/bootstrap-select.js',
                             'js/controllers/UsersManagementController.js'
                         ]
                     });
@@ -331,10 +319,10 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', fun
             data: {pageTitle: 'User Help', pageSubTitle: 'user profile help sample'}      
         });
 
-}]);
+});
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+MetronicApp.run(function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$on("$stateChangeError", function(event, toState, toParas, fromState, fromParams, error) {
         event.preventDefault();
@@ -344,4 +332,4 @@ MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settin
             }
         }
     });
-}]);
+});

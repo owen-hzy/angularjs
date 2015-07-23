@@ -1,0 +1,31 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="$dismiss()">&times;</button>
+		<h4 class="modal-title">Edit User</h4>
+		<p>{{ requestError }}</p>
+	</div>
+	<form name="editUserForm" novalidate>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="id">UserId</label>
+				<input type="text" class="form-control" id="id" placeholder="Learner Id" ng-model="editUser.LearnerId" disabled>
+			</div>
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" id="username" placeholder="Username" ng-model="editUser.Username" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" ng-model="editUser.Password">
+			</div>
+			<div class="form-group">
+				<label for="role">UserRole</label>
+				<select class="form-control" id="role" ng-model="editUser.Roles" multiple ng-options="role as role for role in userRoles" required></select>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-success" ng-click="updateUser()" ng-disabled="editUserForm.$pristine || editUserForm.$invalid">Update</button>
+			<button type="button" class="btn btn-danger" ng-click="$dismiss()">Cancel</button>
+		</div>
+	</form>
+</div>

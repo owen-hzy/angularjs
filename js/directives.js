@@ -4,8 +4,8 @@ GLobal Directives
 ***/
 
 // Route State Load Spinner(used on page or content load)
-MetronicApp.directive('ngSpinnerBar', ['$rootScope',
-    function($rootScope) {
+MetronicApp.directive('ngSpinnerBar', ['$rootScope', '$http', 
+    function($rootScope, $http) {
         return {
             link: function(scope, element, attrs) {
                 // by defult hide the spinner bar
@@ -20,12 +20,7 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope',
                 $rootScope.$on('$stateChangeSuccess', function() {
                     element.addClass('hide'); // hide spinner bar
                     $('body').removeClass('page-on-load'); // remove page loading indicator
-                    Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu
-
-                    // auto scorll to page top
-                    setTimeout(function () {
-                        Metronic.scrollTop(); // scroll to the top on content load
-                    }, $rootScope.settings.layout.pageAutoScrollOnLoad);                    
+                    Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu                  
                 });
 
                 // handle errors
@@ -37,6 +32,19 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope',
                 $rootScope.$on('$stateChangeError', function() {
                     element.addClass('hide'); // hide spinner bar
                 });
+
+                scope.isLoading = function() {
+                    return $http.pendingRequests.length > 0;
+                }
+
+                scope.$watch(scope.isLoading, function(v) {
+                    if (v) {
+                        element.removeClass('hide');
+                    }
+                    else {
+                        element.addClass('hide');
+                    }
+                })
             }
         };
     }

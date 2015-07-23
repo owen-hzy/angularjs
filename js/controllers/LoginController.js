@@ -1,28 +1,28 @@
 'use strict';
 
-MetronicApp.controller('LoginController', function($rootScope, $scope, $state, $localStorage, Auth) {
+MetronicApp.controller('LoginController', function($scope, $state, Auth) {
     $scope.$on('$viewContentLoaded', function() {   
         Login.init(); // initialize core components 
     });
 
     function successAuth(response) {
-    	if (response.accessToken) {
-    		delete $scope.signinError;
-       		$localStorage.token = response.accessToken;
-        	$state.go('dashboard');
-        } else if (response.errorMessage) {
-        	$scope.signinError = response.errorMessage;
+        if (response.errorMessage) {
+            $scope.signinError = response.errorMessage;
+        } else {
+            delete $scope.signinError;
+            $state.go('dashboard');
         }
     };
 
     $scope.signin = function() {
+        delete $scope.signinError;
        	var formData = {
-        	username: $scope.username,
+        	learnerId: $scope.learnerId,
         	password: $scope.password
         };
 
-        Auth.signin(formData, successAuth, function() {
-        	$scope.signinError = 'Server Error';
+        Auth.signin(formData, successAuth, function(error) {
+        	$scope.signinError = error.errorMessage;
         });
     };
 });
