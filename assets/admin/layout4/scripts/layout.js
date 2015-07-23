@@ -23,9 +23,9 @@ var Layout = function() {
             el = $(el);
         } else if (mode === 'match') {
             menu.find("li > a").each(function() {
-                var path = $(this).attr("href").toLowerCase();       
+                var path = $(this).attr("ui-sref").toLowerCase();       
                 // url match condition         
-                if (path.length > 1 && url.substr(1, path.length - 1) == path.substr(1)) {
+                if (path.length > 1 && url.substr(2, path.length) == path) {
                     el = $(this);
                     return; 
                 }
@@ -412,10 +412,6 @@ var Layout = function() {
             }
 
             Metronic.addResizeHandler(handleFixedSidebar); // reinitialize fixed sidebar on window resize
-        },
-
-        initContent: function() {
-            return; 
         },
 
         initFooter: function() {

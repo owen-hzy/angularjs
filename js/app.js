@@ -77,8 +77,8 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
             pageSidebarClosed: false, // sidebar state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        layoutImgPath: Metronic.getAssetsPath() + 'admin/layout/img/',
-        layoutCssPath: Metronic.getAssetsPath() + 'admin/layout/css/'
+        layoutImgPath: Metronic.getAssetsPath() + 'admin/layout4/img/',
+        layoutCssPath: Metronic.getAssetsPath() + 'admin/layout4/css/'
     };
 
     $rootScope.settings = settings;
@@ -229,7 +229,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/users-management',
             parent: 'home',
             templateUrl: 'views/users-management.html',
-            data: {pageTitle: 'Users-Management', pageSubTitle: 'perform user management'},
+            data: {pageTitle: 'Users-Management', pageSubTitle: 'perform users management'},
             controller: 'UsersManagementController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -244,6 +244,20 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                     });
                 }]
             }
+        })
+
+        .state('courses-management', {
+            url: '/courses-management',
+            parent: 'home',
+            templateUrl: 'views/courses-management.html',
+            data: {pageTitle: 'Courses-Management', pageSubTitle: 'perform courses management'}
+        })
+
+        .state('content-management', {
+            url: '/content-management',
+            parent: 'home',
+            templateUrl: 'views/content-management.html',
+            data: {pageTitle: 'Content-Management', pageSubTitle: 'perform content management'}
         })
 
         // AngularJS plugins
