@@ -87,7 +87,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope) {
     $scope.$on('$viewContentLoaded', function() {
         Metronic.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -183,7 +183,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                     } else {
                         return $q.reject({authenticated: false});
                     }
-                } 
+                }
             },
             controller: function($scope, authCheck) {
                 $scope.$on('$viewContentLoaded', function() {   
@@ -259,29 +259,6 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/content-management.html',
             data: {pageTitle: 'Content-Management', pageSubTitle: 'perform content management'}
         })
-
-        // AngularJS plugins
-        .state('fileupload', {
-            url: "/file_upload.html",
-            templateUrl: "views/file_upload.html",
-            data: {pageTitle: 'AngularJS File Upload', pageSubTitle: 'angularjs file upload'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'angularFileUpload',
-                        files: [
-                            'assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js',
-                        ] 
-                    }, {
-                        name: 'MetronicApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })         
 
         // User Profile
         .state("profile", {
