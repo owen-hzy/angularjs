@@ -17,7 +17,7 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
             method: 'POST',
             url: '/api/protected/division',
             headers: {
-                'Content-Type': false,
+                'Content-Type': undefined,
                 Authorization: 'Bearer ' + $localStorage.token
             },
             transformRequest: function(data) {

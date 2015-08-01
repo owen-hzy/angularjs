@@ -179,8 +179,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             },
             controller: function($scope, authCheck) {
-                $scope.$on('$viewContentLoaded', function() {   
-                    var authCheck = {};
+                $scope.$on('$viewContentLoaded', function() {
                     $scope.credentials = {};
                     $scope.credentials.username = authCheck.name;
                     $scope.credentials.roles = authCheck.role;
