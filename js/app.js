@@ -288,7 +288,30 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/slider-image',
             parent: 'home',
             templateUrl: 'views/slider-image.html',
-            data: {title: 'Slider Image'}
+            data: {title: 'Slider Image', pageTitle: 'Slider Image Maintenance'},
+            controller: 'SliderImageController',
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before',
+                        files: [
+                            'js/directives/fileUpload.js',
+                            'js/controllers/SliderImageController.js'
+                        ]
+                    });
+                }],
+                images: function($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('api/protected/slider', 'GET', 3000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                }
+            }
         })
 
         .state('division-maintenance', {
@@ -296,7 +319,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             parent: 'home',
             templateUrl: 'views/division-maintenance.html',
             data: {title: 'Division Maintenance', pageTitle: 'Division Maintenance'},
-            controller: 'DivisionController as DivisionController',
+            controller: 'DivisionController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({

@@ -49,10 +49,10 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
             data: {divisions: $scope.divisions, files: $scope.files}
         })
             .success(function(data) {
-                data.forEach(function(item) {
+                data.forEach(function (item) {
                     $scope.divisions[item.DivisionId - 1].name = item.DivisionName;
                     $scope.divisions[item.DivisionId - 1].src = item.FileName;
                 });
             });
-    }
-});
+        }
+    });
