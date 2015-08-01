@@ -167,26 +167,24 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 
         .state('home', {
             templateUrl: "views/home.html",
-            //resolve: {
-            //    authCheck: function($q, Auth) {
-            //        var auth = Auth.getTokenClaims();
-            //
-            //        if (auth) {
-            //            return $q.when(auth);
-            //        } else {
-            //            return $q.reject({authenticated: false});
-            //        }
-            //    }
-            //},
-            controller: function($scope) {
+            resolve: {
+                authCheck: function($q, Auth) {
+                    var auth = Auth.getTokenClaims();
+
+                    if (auth) {
+                        return $q.when(auth);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                }
+            },
+            controller: function($scope, authCheck) {
                 $scope.$on('$viewContentLoaded', function() {   
-                // initialize core components
-                    //Metronic.initAjax();
                     var authCheck = {};
                     $scope.credentials = {};
-                    $scope.credentials.username = authCheck.name || 'admin';
-                    $scope.credentials.roles = authCheck.role || 'Administrator';
-                    $scope.credentials.userId = authCheck.id || '1';
+                    $scope.credentials.username = authCheck.name;
+                    $scope.credentials.roles = authCheck.role;
+                    $scope.credentials.userId = authCheck.id;
                 });
             }
         })
