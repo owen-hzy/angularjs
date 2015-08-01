@@ -86,14 +86,6 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
     return settings;
 }]);
 
-/* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope) {
-    $scope.$on('$viewContentLoaded', function() {
-        Metronic.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-    });
-}]);
-
 /***
 Layout Partials.
 By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial 
@@ -130,7 +122,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
     });*/
 
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/404");
 
     $stateProvider
         .state('404', {
@@ -147,13 +139,14 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                         ] 
                     });
                 }]
-            }
+            },
+            data: {title: '404'}
         })
 
         .state('login', {
             url: '/login',
             templateUrl: 'views/login.html',
-            data: {pageTitle: 'Login'},
+            data: {title: 'Login'},
             controller: 'LoginController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -174,25 +167,26 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 
         .state('home', {
             templateUrl: "views/home.html",
-            resolve: {
-                authCheck: function($q, Auth) {
-                    var auth = Auth.getTokenClaims();
-
-                    if (auth) {
-                        return $q.when(auth);
-                    } else {
-                        return $q.reject({authenticated: false});
-                    }
-                }
-            },
-            controller: function($scope, authCheck) {
+            //resolve: {
+            //    authCheck: function($q, Auth) {
+            //        var auth = Auth.getTokenClaims();
+            //
+            //        if (auth) {
+            //            return $q.when(auth);
+            //        } else {
+            //            return $q.reject({authenticated: false});
+            //        }
+            //    }
+            //},
+            controller: function($scope) {
                 $scope.$on('$viewContentLoaded', function() {   
                 // initialize core components
-                    Metronic.initAjax();
+                    //Metronic.initAjax();
+                    var authCheck = {};
                     $scope.credentials = {};
-                    $scope.credentials.username = authCheck.name;
-                    $scope.credentials.roles = authCheck.role;
-                    $scope.credentials.userId = authCheck.id;
+                    $scope.credentials.username = authCheck.name || 'admin';
+                    $scope.credentials.roles = authCheck.role || 'Administrator';
+                    $scope.credentials.userId = authCheck.id || '1';
                 });
             }
         })
@@ -202,7 +196,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/',
             parent: 'home',
             templateUrl: "views/dashboard.html",            
-            data: {pageTitle: 'Dashboard', pageSubTitle: 'statistics & reports'},
+            data: {pageTitle: 'Dashboard', pageSubTitle: 'statistics & reports', title: 'Dashboard'},
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -225,12 +219,12 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
         })
 
         // User-Management
-        .state('users-management', {
-            url: '/users-management',
+        .state('account-management', {
+            url: '/account-management',
             parent: 'home',
-            templateUrl: 'views/users-management.html',
-            data: {pageTitle: 'Users-Management', pageSubTitle: 'perform users management'},
-            controller: 'UsersManagementController',
+            templateUrl: 'views/account-management.html',
+            data: {pageTitle: 'Account-Management', pageSubTitle: 'perform account management', title: 'Account Management'},
+            controller: 'AccountManagementController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -239,77 +233,74 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                         files: [
                             'assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.css',          
                             'assets/admin/pages/scripts/bootstrap-select.js',
-                            'js/controllers/UsersManagementController.js'
+                            'js/controllers/AccountManagementController.js'
                         ]
                     });
                 }]
             }
         })
 
-        .state('courses-management', {
-            url: '/courses-management',
+        .state('module-management', {
+            url: '/module-management',
             parent: 'home',
-            templateUrl: 'views/courses-management.html',
-            data: {pageTitle: 'Courses-Management', pageSubTitle: 'perform courses management'}
+            templateUrl: 'views/module-management.html',
+            data: {pageTitle: 'Module-Management', pageSubTitle: 'perform module management', title: 'Module Management'}
         })
 
-        .state('content-management', {
-            url: '/content-management',
+        .state('user-guide', {
+            url: '/user-guide',
             parent: 'home',
-            templateUrl: 'views/content-management.html',
-            data: {pageTitle: 'Content-Management', pageSubTitle: 'perform content management'}
+            templateUrl: 'views/user-guide.html',
+            data: {title: 'User Guide'}
         })
 
-        // User Profile
-        .state("profile", {
-            url: "/profile",
+        .state('faq', {
+            url: '/faq',
             parent: 'home',
-            templateUrl: "views/profile/main.html",
-            data: {pageTitle: 'User Profile', pageSubTitle: 'user profile sample'},
-            controller: "UserProfileController",
+            templateUrl: 'views/faq.html',
+            data: {title: 'FAQ'}
+        })
+
+        .state('contact-us', {
+            url: '/contact-us',
+            parent: 'home',
+            templateUrl: 'views/contact-us.html',
+            data: {title: 'Contact Us'}
+        })
+
+        .state('profile', {
+            url: '/profile',
+            parent: 'home',
+            templateUrl: 'views/profile.html',
+            data: {title: 'User Profile'}
+        })
+
+        .state('slider-image', {
+            url: '/slider-image',
+            parent: 'home',
+            templateUrl: 'views/slider-image.html',
+            data: {title: 'Slider Image'}
+        })
+
+        .state('division-maintenance', {
+            url: '/division-maintenance',
+            parent: 'home',
+            templateUrl: 'views/division-maintenance.html',
+            data: {title: 'Division Maintenance', pageTitle: 'Division Maintenance'},
+            controller: 'DivisionController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before',
                         files: [
-                            'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            'assets/admin/pages/css/profile.css',
-                            'assets/admin/pages/css/tasks.css',
-                            
-                            'assets/global/plugins/jquery.sparkline.min.js',
-                            'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-
-                            'assets/admin/pages/scripts/profile.js',
-
-                            'js/controllers/UserProfileController.js'
-                        ]                    
+                            'js/directives/fileUpload.js',
+                            'js/controllers/DivisionController.js'
+                        ]
                     });
                 }]
             }
-        })
-
-        // User Profile Dashboard
-        .state("profile.dashboard", {
-            url: "/dashboard",
-            templateUrl: "views/profile/dashboard.html",
-            data: {pageTitle: 'User Profile', pageSubTitle: 'user profile dashboard sample'}
-        })
-
-        // User Profile Account
-        .state("profile.account", {
-            url: "/account",
-            templateUrl: "views/profile/account.html",
-            data: {pageTitle: 'User Account', pageSubTitle: 'user profile account sample'}
-        })
-
-        // User Profile Help
-        .state("profile.help", {
-            url: "/help",
-            templateUrl: "views/profile/help.html",
-            data: {pageTitle: 'User Help', pageSubTitle: 'user profile help sample'}      
         });
-
 });
 
 /* Init global settings and run the app */

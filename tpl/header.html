@@ -22,30 +22,30 @@
 			<ul class="nav navbar-nav pull-right">
 				<!-- BEGIN NOTIFICATION DROPDOWN -->
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<li class="dropdown dropdown-extended dropdown-notification" ng-show="credentials.roles.indexOf('Administrator') !== -1">
-					<a ui-sref="users-management" class="dropdown-toggle">
+				<li ui-sref-active="active"class="dropdown dropdown-extended dropdown-notification" ng-show="credentials.roles.indexOf('Administrator') !== -1">
+					<a ui-sref="faq" class="dropdown-toggle">
 					<span>
-						Users
+						FAQ
 					</span>
 					</a>
 				</li>
 				<!-- END NOTIFICATION DROPDOWN -->
 				<!-- BEGIN INBOX DROPDOWN -->
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<li class="dropdown dropdown-extended dropdown-inbox" ng-show="credentials.roles.indexOf('Administrator') !== -1">
-					<a ui-sref="courses-management" class="dropdown-toggle">
+				<li ui-sref-active="active"class="dropdown dropdown-extended dropdown-inbox" ng-show="credentials.roles.indexOf('Administrator') !== -1">
+					<a ui-sref="contact-us" class="dropdown-toggle">
 					<span>
-						Courses
+						Contact Us
 					</span>
 					</a>
 				</li>
 				<!-- END INBOX DROPDOWN -->
 				<!-- BEGIN TODO DROPDOWN -->
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<li class="dropdown dropdown-extended dropdown-tasks">
-					<a ui-sref="content-management" class="dropdown-toggle">
+				<li ui-sref-active="active"class="dropdown dropdown-extended dropdown-tasks">
+					<a ui-sref="user-guide" class="dropdown-toggle">
 					<span>
-						Content 
+						User Guide
 					</span>
 					</a>
 				</li>
@@ -62,20 +62,10 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
 						<li>
-							<a href="#/profile/dashboard">
+							<a ui-sref="profile">
 							<i class="icon-user"></i> My Profile </a>
 						</li>
-						<li>
-							<a href="#/todo">
-							<i class="icon-rocket"></i> My Courses <span class="badge badge-success">
-							7 </span>
-							</a>
-						</li>
 						<li class="divider">
-						</li>
-						<li>
-							<a href="#">
-							<i class="icon-lock"></i> Lock Screen </a>
 						</li>
 						<li>
 							<a ng-click="logout()">

@@ -20,7 +20,6 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope', '$http',
                 $rootScope.$on('$stateChangeSuccess', function() {
                     element.addClass('hide'); // hide spinner bar
                     $('body').removeClass('page-on-load'); // remove page loading indicator
-                    Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu                  
                 });
 
                 // handle errors

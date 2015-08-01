@@ -7,44 +7,68 @@
 	<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 	<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 	<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
-		<li class="heading">
-			<h3>GENERAL</h3>
-		</li>
-		<li>
-			<a ui-sref="dashboard">
-			<i class="icon-home"></i>
-			<span class="title">Dashboard</span>
-			</a>
-		</li>
-		<li>
-			<a ui-sref="users-management">
+		<!--<li class="heading">-->
+			<!--<h3>GENERAL</h3>-->
+		<!--</li>-->
+		<li ui-sref-active="active">
+			<a ui-sref="account-management">
 			<i class="icon-settings"></i>
-			<span class="title">Users Management</span>
+			<span class="title">Account Management</span>
 			</a>
 		</li>
-		<li>
-			<a ui-sref="courses-management">
+		<li ui-sref-active="active">
+			<a ui-sref="module-management">
 			<i class="icon-check"></i>
-			<span class="title">Courses Management</span>
+			<span class="title">Module Management</span>
 			</a>
 		</li>
-		<li>
-			<a ui-sref="content-management">
+		<li ui-sref-active="active">
+			<a>
 			<i class="icon-paper-plane"></i>
-			<span class="title">Content Management</span>
+			<span class="title">Report</span>
 			</a>
 		</li>
 		<li>
-			<a ui-sref="profile">
-			<i class="icon-user"></i>
-			<span class="title">User Profile</span>
+			<a>
+			<i class="icon-home"></i>
+			<span class="title">Maintenance</span>
 			<span class="arrow"></span>
 			</a>
 			<ul class="sub-menu">
-				<li>
-					<a ui-sref="profile.account">
-					<i class="icon-puzzle"></i>
-					My Courses
+				<li ui-sref-active="active">
+					<a ui-sref="slider-image">
+						<i class="icon-arrow-right"></i>
+						Slider Image
+					</a>
+				</li>
+				<li ui-sref-active="active">
+					<a ui-sref="division-maintenance">
+						<i class="icon-arrow-right"></i>
+						Division Maintenance
+					</a>
+				</li>
+				<li ui-sref-active="active">
+					<a ui-sref="faq">
+						<i class="icon-arrow-right"></i>
+						FAQ
+					</a>
+				</li>
+				<li ui-sref-active="active">
+					<a ui-sref="contact-us">
+						<i class="icon-arrow-right"></i>
+						Contact US
+					</a>
+				</li>
+				<li ui-sref-active="active">
+					<a>
+						<i class="icon-arrow-right"></i>
+						Overall Preview
+					</a>
+				</li>
+				<li ui-sref-active="active">
+					<a>
+						<i class="icon-arrow-right"></i>
+						Overall Publish
 					</a>
 				</li>
 			</ul>

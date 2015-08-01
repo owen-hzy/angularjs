@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light" ng-repeat="division in divisions">
+            <div class="portlet-body">
+                <div class="media">
+                    <a class="pull-left">
+                        <img class="media-object" height="128px" width="128px" alt="img" ng-src="{{ division.src }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Division{{$index + 1}}</h4>
+                        <form>
+                            <label>Division Name <input type="text" name="Division{{$index + 1}}" placeholder="Division{{$index+1}} Name" ng-model="division.name"/></label>
+                            <label>Change Image <input type="file" name="{{$index + 1}}" file-upload /></label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" ng-click="submit()">Submit</button>
+    </div>
+</div>

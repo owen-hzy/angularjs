@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('UsersManagementController', function($scope, $modal, HttpService, uiGridConstants) {
+MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService, uiGridConstants) {
     	// Load Users
 	HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function(response) {
 		delete $scope.loadMessage;
