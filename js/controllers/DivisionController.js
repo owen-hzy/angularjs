@@ -1,11 +1,24 @@
 'use strict';
 
-MetronicApp.controller('DivisionController', function($scope, $http, $localStorage){
+MetronicApp.controller('DivisionController', function($scope, $http, $localStorage, divisions){
+
+    if (divisions.errorMessage) {
+        $scope.errorMessage = 'Failed to load divisions, please refresh or contact administrator';
+        return;
+    } else {
+        delete $scope.errorMessage;
+    }
 
     // Variables Initialization
     $scope.divisions = [{},{},{},{},{},{},{},{}];
 
     $scope.files = [];
+
+    divisions.forEach(function(value) {
+        $scope.divisions[value.DivisionId - 1].name = value.DivisionName;
+        $scope.divisions[value.DivisionId - 1].src = value.FileName;
+    });
+
     $scope.$on('fileSelected', function(event, args) {
         $scope.$apply(function(){
             $scope.files[args.index] = args.file;

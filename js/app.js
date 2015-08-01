@@ -167,23 +167,24 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 
         .state('home', {
             templateUrl: "views/home.html",
-            resolve: {
-                authCheck: function($q, Auth) {
-                    var auth = Auth.getTokenClaims();
-
-                    if (auth) {
-                        return $q.when(auth);
-                    } else {
-                        return $q.reject({authenticated: false});
-                    }
-                }
-            },
-            controller: function($scope, authCheck) {
+            //resolve: {
+            //    authCheck: function($q, Auth) {
+            //        var auth = Auth.getTokenClaims();
+            //
+            //        if (auth) {
+            //            return $q.when(auth);
+            //        } else {
+            //            return $q.reject({authenticated: false});
+            //        }
+            //    }
+            //},
+            controller: function($scope) {
                 $scope.$on('$viewContentLoaded', function() {
+                    var authCheck = {};
                     $scope.credentials = {};
-                    $scope.credentials.username = authCheck.name;
-                    $scope.credentials.roles = authCheck.role;
-                    $scope.credentials.userId = authCheck.id;
+                    $scope.credentials.username = authCheck.name || 'admin';
+                    $scope.credentials.roles = authCheck.role || 'Administrator';
+                    $scope.credentials.userId = authCheck.id || 1;
                 });
             }
         })
@@ -233,7 +234,18 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                             'js/controllers/AccountManagementController.js'
                         ]
                     });
-                }]
+                }],
+                users: function(HttpService, $q) {
+                    var data = $q.defer();
+
+                    HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function(response) {
+                        data.resolve(response);
+                    }, function(error) {
+                        data.resolve(error);
+                    });
+
+                    return data.promise;
+                }
             }
         })
 
@@ -284,7 +296,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             parent: 'home',
             templateUrl: 'views/division-maintenance.html',
             data: {title: 'Division Maintenance', pageTitle: 'Division Maintenance'},
-            controller: 'DivisionController',
+            controller: 'DivisionController as DivisionController',
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -295,7 +307,17 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                             'js/controllers/DivisionController.js'
                         ]
                     });
-                }]
+                }],
+                divisions: function($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/api/protected/division', 'GET', 3000, true)
+                        .then(function(response) {
+                           data.resolve(response);
+                        }, function(error) {
+                           data.resolve(error);
+                        });
+                    return data.promise;
+                }
             }
         });
 });

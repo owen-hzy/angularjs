@@ -1,13 +1,14 @@
 'use strict';
 
-MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService, uiGridConstants) {
+MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService, uiGridConstants, users) {
     	// Load Users
-	HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function(response) {
-		delete $scope.loadMessage;
-		$scope.gridOptions.data = response;
-	}, function(error) {
-		$scope.loadMessage = error.errorMessage || error.Message;
-	});
+
+	if (users.errorMessage || users.Message) {
+		$scope.errorMessage = 'Failed to load users, please refresh or contact administrator';
+		return;
+	} else {
+		delete $scope.errorMessage;
+	}
 
 	$scope.gridOptions = {
 		enableRowSelection: true,
@@ -29,6 +30,8 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 			})
 		}
 	};
+
+	$scope.gridOptions.data = users;
 
 	$scope.userRoles = ["Administrator", "ModuleOwner"];
 
