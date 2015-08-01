@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('DivisionController', function($scope, $http){
+MetronicApp.controller('DivisionController', function($scope, $http, $localStorage){
 
     // Variables Initialization
     $scope.divisions = [{},{},{},{},{},{},{},{}];
@@ -17,7 +17,8 @@ MetronicApp.controller('DivisionController', function($scope, $http){
             method: 'POST',
             url: '/api/protected/division',
             headers: {
-                'Content-Type': false
+                'Content-Type': false,
+                Authorization: 'Bearer ' + $localStorage.token
             },
             transformRequest: function(data) {
                 var formData = new FormData();
