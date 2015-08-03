@@ -4,9 +4,10 @@
         <div class="portlet light">
             <div class="portlet-body">
                 <img style="margin-bottom: 20px;" width="100%" height="400px" alt="img" ng-src="{{ image.src }}"/>
-                <input type="file" file-upload name="{{$index + 1}}" />
+                <input type="file" file-upload data-name="{{$index + 1}}" />
             </div>
         </div>
     </div>
 </div>
 <button class="btn btn-primary" ng-click="submit()" ng-show="! errorMessage">Submit</button>
+<progressbar ng-show="progress" ng-class="{'progress-striped': true, 'active':progress != 100}" animate="true" value="progress" type="success">{{progress}}%</progressbar>

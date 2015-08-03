@@ -10,7 +10,8 @@ var MetronicApp = angular.module("MetronicApp", [
     "oc.lazyLoad",
     "ngSanitize",
     "ui.grid",
-    "ui.grid.selection"
+    "ui.grid.selection",
+    "ngFileUpload"
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */

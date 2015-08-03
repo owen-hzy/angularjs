@@ -7,7 +7,8 @@ MetronicApp.directive('fileUpload', function(){
         link: function(scope, element) {
             element.bind('change', function(event) {
                 var files = event.target.files;
-                scope.$emit('fileSelected', {file: files[0], index: event.target.name});
+                var index = event.target.dataset.name;
+                scope.$emit('fileSelected', {file: files[0], index: index});
             });
         }
     }
