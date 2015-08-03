@@ -241,7 +241,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                 users: function (HttpService, $q) {
                     var data = $q.defer();
 
-                    HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function (response) {
+                    HttpService.sendRequest('/WebApi/api/protected/users', 'GET', 2000, true).then(function (response) {
                         data.resolve(response);
                     }, function (error) {
                         data.resolve(error);
@@ -310,7 +310,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                 }],
                 images: function ($q, HttpService) {
                     var data = $q.defer();
-                    HttpService.sendRequest('api/protected/slider', 'GET', 3000, true)
+                    HttpService.sendRequest('/WebApi/api/protected/slider', 'GET', 3000, true)
                         .then(function (response) {
                             data.resolve(response);
                         }, function (error) {
@@ -340,7 +340,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                 }],
                 divisions: function ($q, HttpService) {
                     var data = $q.defer();
-                    HttpService.sendRequest('/api/protected/division', 'GET', 3000, true)
+                    HttpService.sendRequest('/WebApi/api/protected/division', 'GET', 3000, true)
                         .then(function (response) {
                             data.resolve(response);
                         }, function (error) {

@@ -69,7 +69,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 	$scope.updateUser = function() {
 		delete $scope.requestError;
 		if ($scope.isRowSelected) {
-			HttpService.sendRequest('/api/protected/users', 'PUT', 2000, true, $scope.editUser).then(function(response){
+			HttpService.sendRequest('/WebApi/api/protected/users', 'PUT', 2000, true, $scope.editUser).then(function(response){
 				$scope.selectedRow.entity.LearnerId = $scope.editUser.LearnerId;
 				$scope.selectedRow.entity.Username = $scope.editUser.Username;
 				$scope.selectedRow.entity.Roles = $scope.editUser.Roles;
@@ -88,7 +88,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 			"Password": $scope.newUser.password,
 			"Roles": $scope.newUser.roles
 		}
-		HttpService.sendRequest('/api/protected/users', 'POST', 2000, true, newUser).then(function(response){
+		HttpService.sendRequest('/WebApi/api/protected/users', 'POST', 2000, true, newUser).then(function(response){
 			$scope.gridOptions.data.push(newUser);
 			$scope.modal.close();
 		}, function(error) {
@@ -100,7 +100,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		delete $scope.requestError;
 		if (confirmed) {
 			if ($scope.isRowSelected) {
-				HttpService.sendRequest('/api/protected/users/' + $scope.selectedRow.entity.LearnerId,
+				HttpService.sendRequest('/WebApi/api/protected/users/' + $scope.selectedRow.entity.LearnerId,
 					'DELETE', 2000, true).then(function(response) {
 						console.log($scope.gridOptions.data.lastIndexOf($scope.selectedRow));
 						$scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf($scope.selectedRow.entity), 1);

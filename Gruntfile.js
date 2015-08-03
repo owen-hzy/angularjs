@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 				livereload: 35729
 			},
 			proxies: [{
-				context: ['/api', '/Uploads'],
+				context: ['/WebApi/api', '/WebApi/Uploads'],
 				host: 'localhost',
 				port: 18289
 			}],

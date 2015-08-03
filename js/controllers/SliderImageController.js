@@ -28,7 +28,7 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
     $scope.submit = function() {
         $http({
             method: 'POST',
-            url: '/api/protected/slider',
+            url: '/WebApi/api/protected/slider',
             headers: {
                 'Content-Type': undefined,
                 Authorization: 'Bearer ' + $localStorage.token

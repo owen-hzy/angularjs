@@ -31,7 +31,7 @@ MetronicApp.factory('Auth', function($http, $localStorage, HttpService) {
     return {
         signin: function(data, successCallback, errorCallback) {
             //$http.post('/api/public/login', data, { timeout: 1 }).success(successCallback).error(errorCallback);
-            HttpService.sendRequest('api/public/login', 'POST', 2000, false, data).then(function(response){
+            HttpService.sendRequest('WebApi/api/public/login', 'POST', 2000, false, data).then(function(response){
                 if (response.accessToken) {
                     $localStorage.token = response.accessToken;
                     delete response.accessToken;
