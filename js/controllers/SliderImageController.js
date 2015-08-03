@@ -38,6 +38,8 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
                 data.files.forEach(function(value, index) {
                    formData.append("File" + index, value);
                 });
+
+                return formData;
             },
             data: {files: $scope.files}
         })

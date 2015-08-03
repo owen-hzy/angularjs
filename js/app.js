@@ -1,20 +1,20 @@
 /***
-Metronic AngularJS App Main Script
-***/
+ Metronic AngularJS App Main Script
+ ***/
 
 /* Metronic App */
 var MetronicApp = angular.module("MetronicApp", [
-    "ui.router", 
+    "ui.router",
     "ui.bootstrap",
-    "ngStorage", 
-    "oc.lazyLoad",  
+    "ngStorage",
+    "oc.lazyLoad",
     "ngSanitize",
     "ui.grid",
     "ui.grid.selection"
-]); 
+]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+MetronicApp.config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         cssFilesInsertBefore: 'ng_load_plugins_before' // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
     });
@@ -22,55 +22,55 @@ MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
 
 /********************************************
  BEGIN: BREAKING CHANGE in AngularJS v1.3.x:
-*********************************************/
+ *********************************************/
 /**
-`$controller` will no longer look for controllers on `window`.
-The old behavior of looking on `window` for controllers was originally intended
-for use in examples, demos, and toy apps. We found that allowing global controller
-functions encouraged poor practices, so we resolved to disable this behavior by
-default.
+ `$controller` will no longer look for controllers on `window`.
+ The old behavior of looking on `window` for controllers was originally intended
+ for use in examples, demos, and toy apps. We found that allowing global controller
+ functions encouraged poor practices, so we resolved to disable this behavior by
+ default.
 
-To migrate, register your controllers with modules rather than exposing them
-as globals:
+ To migrate, register your controllers with modules rather than exposing them
+ as globals:
 
-Before:
+ Before:
 
-```javascript
-function MyController() {
+ ```javascript
+ function MyController() {
   // ...
 }
-```
+ ```
 
-After:
+ After:
 
-```javascript
-angular.module('myApp', []).controller('MyController', [function() {
+ ```javascript
+ angular.module('myApp', []).controller('MyController', [function() {
   // ...
 }]);
 
-Although it's not recommended, you can re-enable the old behavior like this:
+ Although it's not recommended, you can re-enable the old behavior like this:
 
-```javascript
-angular.module('myModule').config(['$controllerProvider', function($controllerProvider) {
+ ```javascript
+ angular.module('myModule').config(['$controllerProvider', function($controllerProvider) {
   // this option might be handy for migrating old apps, but please don't use it
   // in new ones!
   $controllerProvider.allowGlobals();
 }]);
-**/
+ **/
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
-MetronicApp.config(['$controllerProvider', function($controllerProvider) {
-  // this option might be handy for migrating old apps, but please don't use it
-  // in new ones!
-  $controllerProvider.allowGlobals();
+MetronicApp.config(['$controllerProvider', function ($controllerProvider) {
+    // this option might be handy for migrating old apps, but please don't use it
+    // in new ones!
+    $controllerProvider.allowGlobals();
 }]);
 
 /********************************************
  END: BREAKING CHANGE in AngularJS v1.3.x:
-*********************************************/
+ *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+MetronicApp.factory('settings', ['$rootScope', function ($rootScope) {
     // supported languages
     var settings = {
         layout: {
@@ -87,42 +87,42 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /***
-Layout Partials.
-By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial 
-initialization can be disabled and Layout.init() should be called on page load complete as explained above.
-***/
+ Layout Partials.
+ By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial
+ initialization can be disabled and Layout.init() should be called on page load complete as explained above.
+ ***/
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+MetronicApp.controller('SidebarController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
     });
 }]);
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+MetronicApp.controller('FooterController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Layout.initFooter(); // init footer
     });
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(function($stateProvider, $urlRouterProvider) {
+MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
 
     /*$httpProvider.interceptors.push(function($q, $injector, $localStorage) {
-        return {
-            'responseError': function(response) {
-                if (response.status === 401) {
-                    delete $localStorage.token;
-                    $injector.get('$state').go('login');
-                }
-                return $q.reject(response);
-            }
-        };
-    });*/
+     return {
+     'responseError': function(response) {
+     if (response.status === 401) {
+     delete $localStorage.token;
+     $injector.get('$state').go('login');
+     }
+     return $q.reject(response);
+     }
+     };
+     });*/
 
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/404");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
         .state('404', {
@@ -130,13 +130,13 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/404.html',
             parent: 'home',
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/admin/pages/css/error.css'
-                        ] 
+                        ]
                     });
                 }]
             },
@@ -149,13 +149,13 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             data: {title: 'Login'},
             controller: 'LoginController',
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
                             'assets/admin/pages/css/login.css',
-                            
+
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             'assets/admin/pages/scripts/login.js',
                             'js/controllers/LoginController.js'
@@ -167,20 +167,19 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 
         .state('home', {
             templateUrl: "views/home.html",
-            //resolve: {
-            //    authCheck: function($q, Auth) {
-            //        var auth = Auth.getTokenClaims();
-            //
-            //        if (auth) {
-            //            return $q.when(auth);
-            //        } else {
-            //            return $q.reject({authenticated: false});
-            //        }
-            //    }
-            //},
-            controller: function($scope) {
-                $scope.$on('$viewContentLoaded', function() {
-                    var authCheck = {};
+            resolve: {
+                authCheck: function ($q, Auth) {
+                    var auth = Auth.getTokenClaims();
+
+                    if (auth) {
+                        return $q.when(auth);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                }
+            },
+            controller: function ($scope, authCheck) {
+                $scope.$on('$viewContentLoaded', function () {
                     $scope.credentials = {};
                     $scope.credentials.username = authCheck.name || 'admin';
                     $scope.credentials.roles = authCheck.role || 'Administrator';
@@ -193,24 +192,24 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
         .state('dashboard', {
             url: '/',
             parent: 'home',
-            templateUrl: "views/dashboard.html",            
+            templateUrl: "views/dashboard.html",
             data: {pageTitle: 'Dashboard', pageSubTitle: 'statistics & reports', title: 'Dashboard'},
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/morris/morris.css',
                             'assets/admin/pages/css/tasks.css',
-                            
+
                             'assets/global/plugins/morris/morris.min.js',
                             'assets/global/plugins/morris/raphael-min.js',
                             'assets/global/plugins/jquery.sparkline.min.js',
 
                             'assets/admin/pages/scripts/index3.js',
                             'assets/admin/pages/scripts/tasks.js'
-                        ] 
+                        ]
                     });
                 }]
             }
@@ -221,26 +220,30 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/account-management',
             parent: 'home',
             templateUrl: 'views/account-management.html',
-            data: {pageTitle: 'Account-Management', pageSubTitle: 'perform account management', title: 'Account Management'},
+            data: {
+                pageTitle: 'Account-Management',
+                pageSubTitle: 'perform account management',
+                title: 'Account Management'
+            },
             controller: 'AccountManagementController',
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
-                            'assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.css',          
+                            'assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.css',
                             'assets/admin/pages/scripts/bootstrap-select.js',
                             'js/controllers/AccountManagementController.js'
                         ]
                     });
                 }],
-                users: function(HttpService, $q) {
+                users: function (HttpService, $q) {
                     var data = $q.defer();
 
-                    HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function(response) {
+                    HttpService.sendRequest('/api/protected/users', 'GET', 2000, true).then(function (response) {
                         data.resolve(response);
-                    }, function(error) {
+                    }, function (error) {
                         data.resolve(error);
                     });
 
@@ -253,7 +256,11 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/module-management',
             parent: 'home',
             templateUrl: 'views/module-management.html',
-            data: {pageTitle: 'Module-Management', pageSubTitle: 'perform module management', title: 'Module Management'}
+            data: {
+                pageTitle: 'Module-Management',
+                pageSubTitle: 'perform module management',
+                title: 'Module Management'
+            }
         })
 
         .state('user-guide', {
@@ -291,7 +298,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             data: {title: 'Slider Image', pageTitle: 'Slider Image Maintenance'},
             controller: 'SliderImageController',
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
@@ -301,12 +308,12 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                         ]
                     });
                 }],
-                images: function($q, HttpService) {
+                images: function ($q, HttpService) {
                     var data = $q.defer();
                     HttpService.sendRequest('api/protected/slider', 'GET', 3000, true)
-                        .then(function(response) {
+                        .then(function (response) {
                             data.resolve(response);
-                        }, function(error) {
+                        }, function (error) {
                             data.resolve(error);
                         });
                     return data.promise;
@@ -321,7 +328,7 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
             data: {title: 'Division Maintenance', pageTitle: 'Division Maintenance'},
             controller: 'DivisionController',
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
@@ -331,13 +338,13 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
                         ]
                     });
                 }],
-                divisions: function($q, HttpService) {
+                divisions: function ($q, HttpService) {
                     var data = $q.defer();
                     HttpService.sendRequest('/api/protected/division', 'GET', 3000, true)
-                        .then(function(response) {
-                           data.resolve(response);
-                        }, function(error) {
-                           data.resolve(error);
+                        .then(function (response) {
+                            data.resolve(response);
+                        }, function (error) {
+                            data.resolve(error);
                         });
                     return data.promise;
                 }
@@ -346,12 +353,12 @@ MetronicApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 /* Init global settings and run the app */
-MetronicApp.run(function($rootScope, settings, $state) {
+MetronicApp.run(function ($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
-    $rootScope.$on("$stateChangeError", function(event, toState, toParas, fromState, fromParams, error) {
+    $rootScope.$on("$stateChangeError", function (event, toState, toParas, fromState, fromParams, error) {
         event.preventDefault();
         if (angular.isObject(error)) {
-            if (! error.authenticated) {
+            if (!error.authenticated) {
                 $state.go('login');
             }
         }
