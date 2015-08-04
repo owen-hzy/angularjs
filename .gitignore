@@ -1,5 +1,5 @@
 node_modules/
-.idea/
 bower_components/
+.idea/
 .tmp/
 dist/
