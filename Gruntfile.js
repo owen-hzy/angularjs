@@ -113,7 +113,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dist',
-                    src: ['index.html', 'views/*.html'],
+                    src: ['index.html', 'views/*.html', 'tpl/*.html'],
                     dest: 'dist'
                 }]
             }
@@ -159,6 +159,32 @@ module.exports = function(grunt) {
                     cwd: '.',
                     src: ['*.html', 'views/*.html', 'tpl/*.html', '*.ico'],
                     dest: 'dist'
+                },{
+                    expand: true,
+                    cwd: '.',
+                    src: ['assets/admin/layout4/img/*.{jpg,jpeg,png,gif}'],
+                    dest: 'dist/img',
+                    flatten: true,
+                    filter: 'isFile'
+                }, {
+                    expand: true,
+                    cwd: 'assets/global/plugins/font-awesome/fonts',
+                    src: ['*.*'],
+                    dest: 'dist/fonts'
+                }, {
+                    expand: true,
+                    cwd: 'assets/global/plugins/simple-line-icons/fonts',
+                    src: ['*.*'],
+                    dest: 'dist/styles/fonts'
+                }
+                ]
+            },
+            add: {
+                files: [{
+                    expand:true,
+                    cwd: 'bower_components/angular-ui-grid',
+                    src: ['*.{eot,svg,ttf,woff}'],
+                    dest: 'dist/styles'
                 }]
             }
         }
@@ -176,6 +202,7 @@ module.exports = function(grunt) {
         grunt.task.run([
             // Do Concat first, then do uglify
             'clean:dist',
+            'imagemin:dist',
             'useminPrepare',
             'concat',
             'ngAnnotate',

@@ -8,18 +8,10 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.router",
     "ui.bootstrap",
     "ngStorage",
-    "oc.lazyLoad",
     "ui.grid",
     "ui.grid.selection",
     "ngFileUpload"
 ]);
-
-/* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
-    $ocLazyLoadProvider.config({
-        cssFilesInsertBefore: 'ng_load_plugins_before' // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-    });
-}]);
 
 /********************************************
  BEGIN: BREAKING CHANGE in AngularJS v1.3.x:
@@ -130,17 +122,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/404',
             templateUrl: 'views/404.html',
             parent: 'home',
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            'assets/admin/pages/css/error.css'
-                        ]
-                    });
-                }]
-            },
             data: {title: '404'}
         })
 
@@ -148,21 +129,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/login',
             templateUrl: 'views/login.html',
             data: {title: 'Login'},
-            controller: 'LoginController',
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                            'assets/admin/pages/css/login.css',
-
-                            'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
-                            'assets/admin/pages/scripts/login.js'
-                        ]
-                    });
-                }]
-            }
+            controller: 'LoginController'
         })
 
         .state('home', {
@@ -193,26 +160,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/',
             parent: 'home',
             templateUrl: "views/dashboard.html",
-            data: {pageTitle: 'Dashboard', pageSubTitle: 'statistics & reports', title: 'Dashboard'},
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            'assets/global/plugins/morris/morris.css',
-                            'assets/admin/pages/css/tasks.css',
-
-                            'assets/global/plugins/morris/morris.min.js',
-                            'assets/global/plugins/morris/raphael-min.js',
-                            'assets/global/plugins/jquery.sparkline.min.js',
-
-                            'assets/admin/pages/scripts/index3.js',
-                            'assets/admin/pages/scripts/tasks.js'
-                        ]
-                    });
-                }]
-            }
+            data: {pageTitle: 'Dashboard', pageSubTitle: 'statistics & reports', title: 'Dashboard'}
         })
 
         // User-Management
@@ -227,15 +175,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'AccountManagementController',
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                            'assets/admin/pages/scripts/bootstrap-select.js'
-                        ]
-                    });
-                }],
                 users: function (HttpService, $q) {
                     var data = $q.defer();
 
