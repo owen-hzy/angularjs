@@ -6,6 +6,10 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		watch: {
+            bower: {
+                files: ['bower.json'],
+                tasks: ['wiredep']
+            },
 			js: {
 				files: ['js/**/*.js', 'Gruntfile.js'],
 				options: {
@@ -66,8 +70,13 @@ module.exports = function(grunt) {
 
         clean: {
             dist: {
-                dot: true,
-                src: ['.tmp','dist']
+                src: ['dist']
+            }
+        },
+
+        wiredep: {
+            app: {
+                src: ['index.html']
             }
         },
 
@@ -75,6 +84,82 @@ module.exports = function(grunt) {
             html: 'index.html',
             options : {
                 dest: 'dist'
+            }
+        },
+
+        usemin: {
+            html:  'dist/index.html'
+        },
+
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'images',
+                    src: '*.{png, jpg, jpeg, gif}',
+                    dest: 'dist/images'
+                }]
+            }
+        },
+
+        htmlmin: {
+            dist: {
+                options: {
+                    collapseWhitespace: true,
+                    removeComments: true,
+                    removeOptionalTags: true,
+                    collapseBooleanAttributes: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'dist',
+                    src: ['index.html', 'views/*.html'],
+                    dest: 'dist'
+                }]
+            }
+        },
+
+        ngAnnotate: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/concat/js',
+                    src: ['*.js', '!oldieshim.js'],
+                    dest: '.tmp/concat/js'
+                }]
+            }
+        },
+
+        /*uglify: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/js',
+                    src: ['*.js'],
+                    dest: 'dist/js',
+                    ext: '.min.js',
+                    extDot: 'last'
+                }]
+            }
+        },
+
+        concat: {
+            dist: {
+                files: [{
+                    'dist/js/concat.js': ['js/!**!/!*.js']
+                }]
+            }
+        },*/
+
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '.',
+                    src: ['*.html', 'views/*.html', 'tpl/*.html', '*.ico'],
+                    dest: 'dist'
+                }]
             }
         }
 	});
@@ -86,4 +171,19 @@ module.exports = function(grunt) {
 			'watch'
 		]);
 	});
+
+    grunt.registerTask('build', function() {
+        grunt.task.run([
+            // Do Concat first, then do uglify
+            'clean:dist',
+            'useminPrepare',
+            'concat',
+            'ngAnnotate',
+            'uglify',
+            'cssmin',
+            'copy:dist',
+            'usemin',
+            'htmlmin'
+        ]);
+    })
 };

@@ -25,6 +25,12 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 
+<!-- build:css(.) styles/vendor.css -->
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+<!-- endbower -->
+<!-- endbuild -->
+
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -78,46 +84,52 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
 	<!-- BEGIN CORE JQUERY PLUGINS -->
+    <!-- build:js(.) js/oldieshim.js -->
 	<!--[if lt IE 9]>
 	<script src="assets/global/plugins/respond.min.js"></script>
 	<script src="assets/global/plugins/excanvas.min.js"></script> 
 	<![endif]-->
-	<script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <!-- endbuild -->
 	<!-- END CORE JQUERY PLUGINS -->
 
-	<!-- BEGIN CORE ANGULARJS PLUGINS -->
-	<script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>	
-	<script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>	
-	<script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/plugins/ngstorage/ngStorage.min.js"></script>
-	<script src="assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/plugins/ng-file-upload/ng-file-upload.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/plugins/ng-file-upload-shim/ng-file-upload-shim.min.js" type="text/javascript"></script>
-	<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-	<!-- END CORE ANGULARJS PLUGINS -->
-	
+    <!-- build:js(.) js/vendor.js -->
+    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <!-- endbower -->
+    <script src="assets/global/plugins/angular/ui-bootstrap-tpls.min.js"></script>
+    <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+    <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
+    <!-- END APP LEVEL JQUERY SCRIPTS -->
+    <!-- endbuild -->
+
 	<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+    <!-- build:js(.) js/app.js -->
 	<script src="js/app.js" type="text/javascript"></script>
 	<script src="js/services/HttpService.js" type="text/javascript"></script>
 	<script src="js/services/AuthService.js" type="text/javascript"></script>
 	<script src="js/controllers/HeaderController.js" type="text/javascript"></script>
+    <script src="js/controllers/LoginController.js" type="text/javascript"></script>
+    <script src="js/controllers/AccountManagementController.js" type="text/javascript"></script>
+    <script src="js/controllers/DivisionController.js" type="text/javascript"></script>
+    <script src="js/controllers/SliderImageController.js" type="text/javascript"></script>
 	<script src="js/directives/directives.js" type="text/javascript"></script>
+    <script src="js/directives/fileUpload.js" type="text/javascript"></script>
+    <!-- endbuild -->
 	<!-- END APP LEVEL ANGULARJS SCRIPTS -->
-
-	<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
-	<script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
-	<script src="assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
-	<!-- END APP LEVEL JQUERY SCRIPTS -->
-
 	<!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

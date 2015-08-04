@@ -1,6 +1,7 @@
 /***
  Metronic AngularJS App Main Script
  ***/
+"use strict";
 
 /* Metronic App */
 var MetronicApp = angular.module("MetronicApp", [
@@ -8,7 +9,6 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap",
     "ngStorage",
     "oc.lazyLoad",
-    "ngSanitize",
     "ui.grid",
     "ui.grid.selection",
     "ngFileUpload"
@@ -158,8 +158,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                             'assets/admin/pages/css/login.css',
 
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
-                            'assets/admin/pages/scripts/login.js',
-                            'js/controllers/LoginController.js'
+                            'assets/admin/pages/scripts/login.js'
                         ]
                     });
                 }]
@@ -233,9 +232,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
-                            'assets/global/plugins/angularjs/plugins/angular-ui-grid/ui-grid.min.css',
-                            'assets/admin/pages/scripts/bootstrap-select.js',
-                            'js/controllers/AccountManagementController.js'
+                            'assets/admin/pages/scripts/bootstrap-select.js'
                         ]
                     });
                 }],
@@ -299,16 +296,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {title: 'Slider Image', pageTitle: 'Slider Image Maintenance'},
             controller: 'SliderImageController',
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                            'js/directives/fileUpload.js',
-                            'js/controllers/SliderImageController.js'
-                        ]
-                    });
-                }],
                 images: function ($q, HttpService) {
                     var data = $q.defer();
                     HttpService.sendRequest('/WebApi/api/protected/slider', 'GET', 3000, true)
@@ -329,16 +316,6 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {title: 'Division Maintenance', pageTitle: 'Division Maintenance'},
             controller: 'DivisionController',
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                            'js/directives/fileUpload.js',
-                            'js/controllers/DivisionController.js'
-                        ]
-                    });
-                }],
                 divisions: function ($q, HttpService) {
                     var data = $q.defer();
                     HttpService.sendRequest('/WebApi/api/protected/division', 'GET', 3000, true)

@@ -1,9 +1,12 @@
 {
-  "name": "hsmtauthoringtool",
-  "version": "1.0.0",
+  "name": "hsmtAuthoringTool",
+  "version": "0.0.0",
   "dependencies": {
     "angular-ui-grid": "~3.0.1",
-    "ng-file-upload": "~6.0.2",
-    "ng-file-upload-shim": "~6.0.2"
+    "angular": "~1.4.3",
+    "ng-file-upload": "~6.0.3",
+    "angular-ui-router": "~0.2.15",
+    "oclazyload": "~1.0.4",
+    "ngstorage": "~0.3.7"
   }
 }
