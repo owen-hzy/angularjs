@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
+	// Load grunt tasks automatically
 	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
@@ -17,8 +18,9 @@ module.exports = function(grunt) {
 				},
 				files: [
 					'index.html',
-					'views/**/*.html',
-					'tpl/*.html'
+					'views/*.html',
+					'tpl/*.html',
+                    'images/*.{png,jpg,jpeg,gif,svg}'
 				]
 			}
 		},
@@ -53,8 +55,28 @@ module.exports = function(grunt) {
 						return middlewares;
 					}
 				}
-			}
-		}
+			},
+            dist: {
+                options: {
+                    open: true,
+                    base: 'dist'
+                }
+            }
+		},
+
+        clean: {
+            dist: {
+                dot: true,
+                src: ['.tmp','dist']
+            }
+        },
+
+        useminPrepare: {
+            html: 'index.html',
+            options : {
+                dest: 'dist'
+            }
+        }
 	});
 
 	grunt.registerTask('serve', function() {
