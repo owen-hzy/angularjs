@@ -104,6 +104,8 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 					'DELETE', 10000, true).then(function(response) {
 						$scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf($scope.selectedRow.entity), 1);
 						$scope.modal.close();
+                        delete $scope.isRowSelected;
+                        $scope.gridApi.selection.clearSelectedRows();
 					}, function(error) {
 						$scope.requestError = error.errorMessage || error.Message;
 					});
