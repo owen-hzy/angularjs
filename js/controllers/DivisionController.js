@@ -14,6 +14,8 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
 
     $scope.files = [];
 
+    $scope.fileCount = 0;
+
     divisions.forEach(function(value) {
         $scope.divisions[value.DivisionId - 1].name = value.DivisionName;
         $scope.divisions[value.DivisionId - 1].src = value.FileName;
@@ -21,7 +23,15 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
 
     $scope.$on('fileSelected', function(event, args) {
         $scope.$apply(function(){
-            $scope.files[args.index] = args.file;
+            if (typeof(args.file) === 'undefined') {
+                $scope.files.splice(args.index, 1);
+                $scope.fileCount--;
+            }
+            else
+            {
+                $scope.files[args.index] = args.file;
+                $scope.fileCount++;
+            }
         });
     });
 
@@ -49,6 +59,9 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
             data: {divisions: $scope.divisions, files: $scope.files}
         })
             .success(function(data) {
+                $scope.files = [];
+                $scope.fileCount = 0;
+                $scope.$broadcast('successUpload');
                 data.forEach(function (item) {
                     $scope.divisions[item.DivisionId - 1].name = item.DivisionName;
                     $scope.divisions[item.DivisionId - 1].src = item.FileName;

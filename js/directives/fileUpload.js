@@ -10,6 +10,10 @@ MetronicApp.directive('fileUpload', function(){
                 var index = event.target.dataset.name;
                 scope.$emit('fileSelected', {file: files[0], index: index});
             });
+
+            scope.$on('successUpload', function() {
+                $(element).val("");
+            });
         }
     }
 });

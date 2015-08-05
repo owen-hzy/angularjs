@@ -13,6 +13,7 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
 
     $scope.files = [];
     $scope.fileNames = [];
+    $scope.fileCount = 0;
 
     images.forEach(function(value) {
        $scope.images[value.SliderId - 1].src = value.FilePath;
@@ -23,12 +24,22 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
            var index = $scope.fileNames.lastIndexOf("file" + args.index);
            if (index != -1)
            {
-               $scope.files.splice(index, 1, args.file);
+               if (typeof(args.file) === 'undefined')
+               {
+                   $scope.files.splice(index, 1);
+                   $scope.fileNames.splice(index, 1);
+                   --$scope.fileCount;
+               }
+               else
+               {
+                   $scope.files.splice(index, 1, args.file);
+               }
            }
            else
            {
                $scope.files.push(args.file);
                $scope.fileNames.push("file" + args.index);
+               ++$scope.fileCount;
            }
        });
     });
@@ -68,6 +79,10 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
             $scope.progress = progressPercentage;
         }).success(function(data)
         {
+            $scope.fileNames = [];
+            $scope.files = [];
+            $scope.fileCount = 0;
+            $scope.$broadcast('successUpload');
            data.forEach(function(item) {
               $scope.images[item.SliderId - 1].src = item.FilePath;
            });

@@ -9,5 +9,5 @@
         </div>
     </div>
 </div>
-<button class="btn btn-primary" ng-click="submit()" ng-show="! errorMessage">Submit</button>
+<button class="btn btn-primary" ng-click="submit()" ng-show="! errorMessage" ng-disabled="fileCount == 0">Submit</button>
 <progressbar ng-show="progress" ng-class="{'progress-striped': true, 'active':progress != 100}" animate="true" value="progress" type="success">{{progress}}%</progressbar>
