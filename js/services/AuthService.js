@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.factory('Auth', function($http, $localStorage, HttpService) {
+MetronicApp.factory('Auth', function($http, $cookies, HttpService) {
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
         switch (output.length % 4) {
@@ -19,7 +19,7 @@ MetronicApp.factory('Auth', function($http, $localStorage, HttpService) {
     };
 
     function getClaimsFromToken() {
-        var token = $localStorage.token;
+        var token = $cookies.get('token');
         var claim = null;
         if (typeof token !== 'undefined') {
             var encoded = token.split('.')[1];
@@ -33,7 +33,7 @@ MetronicApp.factory('Auth', function($http, $localStorage, HttpService) {
             //$http.post('/api/public/login', data, { timeout: 1 }).success(successCallback).error(errorCallback);
             HttpService.sendRequest('WebApi/api/public/login', 'POST', 10000, false, data).then(function(response){
                 if (response.accessToken) {
-                    $localStorage.token = response.accessToken;
+                    $cookies.put('token', response.accessToken);
                     delete response.accessToken;
                 }
                 if (successCallback) {
@@ -46,7 +46,7 @@ MetronicApp.factory('Auth', function($http, $localStorage, HttpService) {
             });
         },
         logout: function(successCallback) {
-            delete $localStorage.token;
+            $cookies.remove('token');
             if (successCallback) {
                 successCallback();
             }

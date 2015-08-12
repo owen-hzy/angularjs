@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('DivisionController', function($scope, $http, $localStorage, divisions){
+MetronicApp.controller('DivisionController', function($scope, $http, $cookies, divisions){
 
     if (divisions.errorMessage) {
         $scope.errorMessage = 'Failed to load divisions, please refresh or contact administrator';
@@ -41,7 +41,7 @@ MetronicApp.controller('DivisionController', function($scope, $http, $localStora
             url: '/WebApi/api/protected/division',
             headers: {
                 'Content-Type': undefined,
-                Authorization: 'Bearer ' + $localStorage.token
+                Authorization: 'Bearer ' + $cookies.get('token')
             },
             transformRequest: function(data) {
                 var formData = new FormData();

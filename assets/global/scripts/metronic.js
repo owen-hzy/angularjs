@@ -195,6 +195,22 @@ var Metronic = function() {
         });
     };
 
+    // Handles custom checkboxes & radios using jQuery Uniform plugin
+    var handleUniform = function() {
+        if (!$().uniform) {
+            return;
+        }
+        var test = $("input[type=checkbox]:not(.toggle, .md-check, .md-radiobtn, .make-switch, .icheck), input[type=radio]:not(.toggle, .md-check, .md-radiobtn, .star, .make-switch, .icheck)");
+        if (test.size() > 0) {
+            test.each(function() {
+                if ($(this).parents(".checker").size() === 0) {
+                    $(this).show();
+                    $(this).uniform();
+                }
+            });
+        }
+    };
+
     // Handlesmaterial design checkboxes
     var handleMaterialDesign = function() {
 
@@ -260,6 +276,31 @@ var Metronic = function() {
             handleInput($(this));
         });        
     }
+
+    // Handles custom checkboxes & radios using jQuery iCheck plugin
+    var handleiCheck = function() {
+        if (!$().iCheck) {
+            return;
+        }
+
+        $('.icheck').each(function() {
+            var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-grey';
+            var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-grey';
+
+            if (checkboxClass.indexOf('_line') > -1 || radioClass.indexOf('_line') > -1) {
+                $(this).iCheck({
+                    checkboxClass: checkboxClass,
+                    radioClass: radioClass,
+                    insert: '<div class="icheck_line-icon"></div>' + $(this).attr("data-label")
+                });
+            } else {
+                $(this).iCheck({
+                    checkboxClass: checkboxClass,
+                    radioClass: radioClass
+                });
+            }
+        });
+    };
 
     // Handles Bootstrap switches
     var handleBootstrapSwitch = function() {
@@ -497,6 +538,8 @@ var Metronic = function() {
 
             //UI Component handlers     
             handleMaterialDesign(); // handle material design       
+            handleUniform(); // hanfle custom radio & checkboxes
+            handleiCheck(); // handles custom icheck radio and checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
             handleScrollers(); // handles slim scrolling contents 
             handleFancybox(); // handle fancy box
@@ -518,6 +561,8 @@ var Metronic = function() {
 
         //main function to initiate core javascript after ajax complete
         initAjax: function() {
+            handleUniform(); // handles custom radio & checkboxes     
+            handleiCheck(); // handles custom icheck radio and checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
             handleDropdownHover(); // handles dropdown hover       
             handleScrollers(); // handles slim scrolling contents 

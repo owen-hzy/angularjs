@@ -13,6 +13,71 @@ var Layout = function() {
     // this function handles responsive layout on screen size resize or mobile device rotate.
 
 
+    // Handle sidebar menu links
+    var handleSidebarMenuActiveLink = function(mode, el) {
+        var url = location.hash.toLowerCase();    
+
+        var menu = $('.page-sidebar-menu');
+
+        if (mode === 'click' || mode === 'set') {
+            el = $(el);
+        } else if (mode === 'match') {
+            menu.find("li > a").each(function() {
+                var path = $(this).attr("href").toLowerCase();       
+                // url match condition         
+                if (path.length > 1 && url.substr(1, path.length - 1) == path.substr(1)) {
+                    el = $(this);
+                    return; 
+                }
+            });
+        }
+
+        if (!el || el.size() == 0) {
+            return;
+        }
+
+        if (el.attr('href').toLowerCase() === 'javascript:;' || el.attr('href').toLowerCase() === '#') {
+            return;
+        }        
+
+        var slideSpeed = parseInt(menu.data("slide-speed"));
+        var keepExpand = menu.data("keep-expanded");
+
+        // disable active states
+        menu.find('li.active').removeClass('active');
+        menu.find('li > a > .selected').remove();
+
+        if (menu.hasClass('page-sidebar-menu-hover-submenu') === false) {
+            menu.find('li.open').each(function(){
+                if ($(this).children('.sub-menu').size() === 0) {
+                    $(this).removeClass('open');
+                    $(this).find('> a > .arrow.open').removeClass('open');
+                }                             
+            }); 
+        } else {
+             menu.find('li.open').removeClass('open');
+        }
+
+        el.parents('li').each(function () {
+            $(this).addClass('active');
+            $(this).find('> a > span.arrow').addClass('open');
+
+            if ($(this).parent('ul.page-sidebar-menu').size() === 1) {
+                $(this).find('> a').append('<span class="selected"></span>');
+            }
+            
+            if ($(this).children('ul.sub-menu').size() === 1) {
+                $(this).addClass('open');
+            }
+        });
+
+        if (mode === 'click') {
+            if (Metronic.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
+                $('.page-header .responsive-toggler').click();
+            }
+        }
+    };
+
     // Handle sidebar menu
     var handleSidebarMenu = function() {
         $('.page-sidebar').on('click', 'li > a', function(e) {
@@ -82,6 +147,88 @@ var Layout = function() {
             e.preventDefault();
         });
 
+        // handle ajax links within sidebar menu
+        $('.page-sidebar').on('click', ' li > a.ajaxify', function(e) {
+            e.preventDefault();
+            Metronic.scrollTop();
+
+            var url = $(this).attr("href");
+            var menuContainer = $('.page-sidebar ul');
+            var pageContent = $('.page-content');
+            var pageContentBody = $('.page-content .page-content-body');
+
+            menuContainer.children('li.active').removeClass('active');
+            menuContainer.children('arrow.open').removeClass('open');
+
+            $(this).parents('li').each(function() {
+                $(this).addClass('active');
+                $(this).children('a > span.arrow').addClass('open');
+            });
+            $(this).parents('li').addClass('active');
+
+            if (Metronic.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
+                $('.page-header .responsive-toggler').click();
+            }
+
+            Metronic.startPageLoading();
+
+            var the = $(this);
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: url,
+                dataType: "html",
+                success: function(res) {
+
+                    if (the.parents('li.open').size() === 0) {
+                        $('.page-sidebar-menu > li.open > a').click();
+                    }
+
+                    Metronic.stopPageLoading();
+                    pageContentBody.html(res);
+                    Layout.fixContentHeight(); // fix content height
+                    Metronic.initAjax(); // initialize core stuff
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Metronic.stopPageLoading();
+                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
+                }
+            });
+        });
+
+        // handle ajax link within main content
+        $('.page-content').on('click', '.ajaxify', function(e) {
+            e.preventDefault();
+            Metronic.scrollTop();
+
+            var url = $(this).attr("href");
+            var pageContent = $('.page-content');
+            var pageContentBody = $('.page-content .page-content-body');
+
+            Metronic.startPageLoading();
+
+            if (Metronic.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
+                $('.page-header .responsive-toggler').click();
+            }
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: url,
+                dataType: "html",
+                success: function(res) {
+                    Metronic.stopPageLoading();
+                    pageContentBody.html(res);
+                    Layout.fixContentHeight(); // fix content height
+                    Metronic.initAjax(); // initialize core stuff
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
+                    Metronic.stopPageLoading();
+                }
+            });
+        });
 
         // handle scrolling to top on responsive menu toggler click when header is fixed for mobile view
         $(document).on('click', '.page-header-fixed-mobile .responsive-toggler', function(){
@@ -212,6 +359,35 @@ var Layout = function() {
         }
     };
 
+    // Handles the horizontal menu
+    var handleHeader = function() {
+        // handle search box expand/collapse        
+        $('.page-header').on('click', '.search-form', function(e) {
+            $(this).addClass("open");
+            $(this).find('.form-control').focus();
+
+            $('.page-header .search-form .form-control').on('blur', function(e) {
+                $(this).closest('.search-form').removeClass("open");
+                $(this).unbind("blur");
+            });
+        });
+
+        // handle hor menu search form on enter press
+        $('.page-header').on('keypress', '.hor-menu .search-form .form-control', function(e) {
+            if (e.which == 13) {
+                $(this).closest('.search-form').submit();
+                return false;
+            }
+        });
+
+        // handle header search button click
+        $('.page-header').on('mousedown', '.search-form.open .submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).closest('.search-form').submit();
+        });
+    };
+
     // Handles the go to top button at the footer
     var handleGoTop = function() {
         var offset = 300;
@@ -250,13 +426,29 @@ var Layout = function() {
         // Main init methods to initialize the layout
         // IMPORTANT!!!: Do not modify the core handlers call order.
 
+        initHeader: function() {
+            handleHeader(); // handles horizontal menu    
+        },
+
+        setSidebarMenuActiveLink: function(mode, el) {
+            handleSidebarMenuActiveLink(mode, el);
+        },
+
         initSidebar: function() {
             //layout handlers
             handleFixedSidebar(); // handles fixed sidebar menu
             handleSidebarMenu(); // handles main menu
             handleSidebarToggler(); // handles sidebar hide/show
 
+            if (Metronic.isAngularJsApp()) {      
+                handleSidebarMenuActiveLink('match'); // init sidebar active links 
+            }
+
             Metronic.addResizeHandler(handleFixedSidebar); // reinitialize fixed sidebar on window resize
+        },
+
+        initContent: function() {
+            return; 
         },
 
         initFooter: function() {

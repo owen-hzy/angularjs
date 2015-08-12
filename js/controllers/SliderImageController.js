@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('SliderImageController', function($scope, $http, $localStorage, images, Upload) {
+MetronicApp.controller('SliderImageController', function($scope, $http, $cookies, images, Upload) {
 
     if (images.errorMessage) {
         $scope.errorMessage = 'Failed to load slider image, please refresh or contact administrator';
@@ -71,7 +71,7 @@ MetronicApp.controller('SliderImageController', function($scope, $http, $localSt
             url: '/WebApi/api/protected/slider',
             file: $scope.files,
             headers: {
-                Authorization: 'Bearer ' + $localStorage.token
+                Authorization: 'Bearer ' + $cookies.get('token')
             },
             fileFormDataName: $scope.fileNames
         }).progress(function(evt) {

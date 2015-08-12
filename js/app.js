@@ -4,13 +4,13 @@
 "use strict";
 
 /* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
-    "ui.router",
-    "ui.bootstrap",
-    "ngStorage",
-    "ui.grid",
-    "ui.grid.selection",
-    "ngFileUpload"
+var MetronicApp = angular.module('MetronicApp', [
+    'ui.router',
+    'ui.bootstrap',
+    'ui.grid',
+    'ui.grid.selection',
+    'ngFileUpload',
+    'ngCookies'
 ]);
 
 /********************************************

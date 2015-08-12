@@ -1,7 +1,7 @@
 "use strict";
 
 // Set a httpService to control timeout and append token automatically if withToken is set to true
-MetronicApp.factory("HttpService", function($http, $q, $localStorage){
+MetronicApp.factory("HttpService", function($http, $q, $cookies){
 	return {
 		"sendRequest": function(url, method, timeoutMilliSeconds, withToken, data) {
 			var timeoutPromise = $q.defer(),
@@ -23,7 +23,7 @@ MetronicApp.factory("HttpService", function($http, $q, $localStorage){
 				config.data = data;
 			}
 			if (withToken) {
-				config.headers = { Authorization: 'Bearer ' + $localStorage.token };
+				config.headers = { Authorization: 'Bearer ' + $cookies.get('token') };
 			}
 
 			$http(config).success(function(data) {
