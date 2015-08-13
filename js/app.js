@@ -7,10 +7,8 @@
 var MetronicApp = angular.module('MetronicApp', [
     'ui.router',
     'ui.bootstrap',
-    'ui.grid',
-    'ui.grid.selection',
-    'ngFileUpload',
-    'ngCookies'
+    'ngCookies',
+    'angularFileUpload'
 ]);
 
 /********************************************
@@ -134,7 +132,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
 
         .state('home', {
             templateUrl: "views/home.html",
-            resolve: {
+            /*resolve: {
                 authCheck: function ($q, Auth) {
                     var auth = Auth.getTokenClaims();
 
@@ -144,9 +142,10 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                         return $q.reject({authenticated: false});
                     }
                 }
-            },
-            controller: function ($scope, authCheck) {
+            },*/
+            controller: function ($scope) {
                 $scope.$on('$viewContentLoaded', function () {
+                    var authCheck = {};
                     $scope.credentials = {};
                     $scope.credentials.username = authCheck.name || 'admin';
                     $scope.credentials.roles = authCheck.role || 'Administrator';

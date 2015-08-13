@@ -10,11 +10,54 @@
                     <div class="media-body">
                         <h4 class="media-heading">Division{{$index + 1}}</h4>
                             <label>Division Name <input type="text" name="Division{{$index + 1}}" placeholder="Division{{$index+1}} Name" ng-model="division.name"/></label>
-                            <label>Change Image <input type="file" data-name="{{$index + 1}}" file-upload /></label>
+                            <span class="btn green fileinput-button">
+                            Choose file
+                            <input type="file" nv-file-select="" uploader="uploader" options="{ alias: '{{ $index + 1}}'}" />
+                            </span>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" ng-click="submit()" ng-disabled="fileCount == 0">Submit</button>
+        <table class="table" ng-show="uploader.queue.length">
+            <thead>
+            <tr>
+                <th>Division ID</th>
+                <th>Division Name</th>
+                <th>File Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in uploader.queue">
+                <td>{{ item.alias }}</td>
+                <td>{{ divisions[item.alias - 1].name }}</td>
+                <td>{{ item.file.name }}</td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Submit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <div class="progress" ng-show="uploader.queue.length">
+                <div class="progress-bar" ng-style="{ 'width': uploader.progress + '%'}"></div>
+            </div>
+            <button type="button" class="btn btn-success" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Submit all
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="uploader.clearQueue()" ng-show="uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
     </div>
 </div>

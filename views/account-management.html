@@ -1,12 +1,11 @@
-<h1 ng-bind="errorMessage"></h1>
-<div class="row" ng-show="! errorMessage">
+<div class="row">
 	<div class="col-md-12">
 		<div class="portlet light">
 			<div class="portlet-title">
 				<div class="caption">
 					<i class="fa fa-user font-green-sharp">
 					</i>
-					<span class="caption-subject font-green-sharp bold uppercase">All Users</span>
+					<span class="caption-subject font-green-sharp bold uppercase">All Accounts</span>
 				</div>
 			</div>
 			<div class="portlet-body">
@@ -15,18 +14,67 @@
 						<div class="col-md-6">
 							<div class="btn-group">
 								<button type="button" class="btn btn-success" ng-click="add()">
-								Add New <i class="fa fa-plus"></i>
+								Add Account <i class="fa fa-plus"></i>
 								</button>
-								<button type="button" class="btn btn-info" ng-click="edit()" ng-disabled="! isRowSelected">
-								Edit <i class="fa fa-user"></i>
-								</button> 
-								<button style="margin-left: 10px" class="btn btn-danger" ng-click="remove()" ng-disabled="! isRowSelected">
-								Delete <i class="fa fa-minus"></i>
 							</div>
 						</div>
 					</div>
 				</div>
-				<table class="table table-striped table-hover table-bordered" id="userTable" ui-grid="gridOptions" ui-grid-selection ng-show="gridOptions.data.length">
+				<table class="table table-striped table-hover table-bordered" id="accountTable">
+					<thead>
+					    <tr>
+                            <th>
+                                Learner ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Role
+                            </th>
+                            <th>
+                                Module
+                            </th>
+                            <th>
+                                Post Title
+                            </th>
+                            <th>
+                                Contact Phone
+                            </th>
+                            <th>
+                                Contact Email
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href="#">1155043803</a>
+                            </td>
+                            <td>
+                                Alice Sinclair
+                            </td>
+                            <td>
+                                Administrator
+                                <br />
+                                Module Owner
+                            </td>
+                            <td>
+                                <a href="#">1001-A</a>
+                                <br />
+                                <a href="#">1006-xxx</a>
+                            </td>
+                            <td>
+                                Manager
+                            </td>
+                            <td>
+                                43991111
+                            </td>
+                            <td>
+                                example1@gmail.com
+                            </td>
+                        </tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

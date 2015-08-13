@@ -1,16 +1,11 @@
 'use strict';
 
-MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService, uiGridConstants, users) {
-    	// Load Users
+MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService) {
+	$scope.$on('$viewContentLoaded', function() {
+		userTable.init();
+	});
 
-	if (users.errorMessage || users.Message) {
-		$scope.errorMessage = 'Failed to load users, please refresh or contact administrator';
-		return;
-	} else {
-		delete $scope.errorMessage;
-	}
-
-	$scope.gridOptions = {
+	/*$scope.gridOptions = {
 		enableRowSelection: true,
 		enableRowHeaderSelection: false,
 		columnDefs: [
@@ -43,7 +38,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 				scope: $scope
 			});
 		}
-	};
+	};*/
 
 	$scope.add = function() {
 		delete $scope.requestError;
@@ -54,7 +49,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		});
 	}
 
-	$scope.edit = function() {
+	/*$scope.edit = function() {
 		if ($scope.isRowSelected) {
 			delete $scope.requestError;
 			$scope.editUser = {};
@@ -78,7 +73,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 				$scope.requestError = error.errorMessage || error.Message;
 			});
 		}
-	}
+	}*/
 
 	$scope.createUser = function() {
 		delete $scope.requestError;
@@ -96,7 +91,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		});
 	}
 
-	$scope.deleteUser = function(confirmed) {
+	/*$scope.deleteUser = function(confirmed) {
 		delete $scope.requestError;
 		if (confirmed) {
 			if ($scope.isRowSelected) {
@@ -116,6 +111,6 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 			$scope.gridApi.selection.clearSelectedRows();
 			$scope.isRowSelected = false;
 		}
-	}
+	}*/
 
 });
