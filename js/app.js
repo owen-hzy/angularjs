@@ -168,12 +168,10 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             parent: 'home',
             templateUrl: 'views/account-management.html',
             data: {
-                pageTitle: 'Account-Management',
-                pageSubTitle: 'perform account management',
                 title: 'Account Management'
             },
-            controller: 'AccountManagementController',
-            resolve: {
+            controller: 'AccountManagementController'
+            /*resolve: {
                 users: function (HttpService, $q) {
                     var data = $q.defer();
 
@@ -185,18 +183,68 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
 
                     return data.promise;
                 }
-            }
+            }*/
         })
 
-        .state('module-management', {
-            url: '/module-management',
+        .state('add-account', {
+            url: '/add-account',
             parent: 'home',
-            templateUrl: 'views/module-management.html',
+            templateUrl: 'views/add-account.html',
             data: {
-                pageTitle: 'Module-Management',
-                pageSubTitle: 'perform module management',
-                title: 'Module Management'
-            }
+                title: 'Add Account'
+            },
+            controller: 'ComponentController'
+        })
+
+        .state('all-modules', {
+            url: '/all-modules',
+            parent: 'home',
+            templateUrl: 'views/all-modules.html',
+            data: {
+                title: 'All Modules'
+            },
+            controller: 'ModuleController'
+        })
+
+        .state('pending-tasks', {
+            url: '/pending-tasks',
+            parent: 'home',
+            templateUrl: 'views/pending-tasks.html',
+            data: {
+                title: 'Pending Tasks'
+            },
+            controller: 'PendingTaskController'
+        })
+
+        .state('add-module', {
+            url: '/add-module',
+            parent: 'home',
+            templateUrl: 'views/add-module.html',
+            data: {
+                title: 'Add Module'
+            },
+            controller: 'ComponentController'
+        })
+
+        .state('module-information', {
+            url: '/module-information/{moduleId}',
+            parent: 'home',
+            templateUrl: 'views/module-information.html',
+            data: {
+                pageTitle: 'Module Information',
+                title: 'Module Information'
+            },
+            controller: 'ModuleInfoController'
+        })
+
+        .state('edit-module', {
+            url: '/edit-module/{moduleId}',
+            parent: 'home',
+            templateUrl: 'views/edit-module.html',
+            data: {
+                title: 'Edit Module'
+            },
+            controller: 'EditModuleController'
         })
 
         .state('user-guide', {

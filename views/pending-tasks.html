@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject bold font-green-haze">
+                        Pending Tasks
+                    </span>
+                </div>
+                <div class="actions" style="margin-right: 20px;">
+                    <div class="portlet-input input-inline input-small">
+                        <div>
+                            <select id="EditingStatusSelection" class="select2">
+                                <option>Waiting for Approval</option>
+                                <option>Waiting for Publishing</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-hover table-bordered" id="pendingTasksTable">
+                    <thead>
+                        <th>
+                            Division
+                        </th>
+                        <th>
+                            Module
+                        </th>
+                        <th>
+                            Display Status
+                        </th>
+                        <th>
+                            Editing Status
+                        </th>
+                        <th>
+                            Last Action By
+                        </th>
+                        <th>
+                            Last Action Time
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1 - Cluster Services
+                            </td>
+                            <td>
+                                <a ui-sref="module-information">1001-A</a>
+                            </td>
+                            <td>
+                                Active
+                            </td>
+                            <td>
+                                Waiting for Approval
+                            </td>
+                            <td>
+                                Alice Sinclair
+                            </td>
+                            <td>
+                                15/7/2015
+                                <br />
+                                13:20pm
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

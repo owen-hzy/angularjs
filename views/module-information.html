@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue-madison">
+            <div class="portlet-title">
+                <div class="caption">
+                    Module Properties
+                </div>
+                <div class="tools">
+                    <a ui-sref="edit-module" style="color: white">
+                        Edit Properties>>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="col-md-3">Module ID</th>
+                            <td class="col-md-9">
+                                3025
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Module Title</th>
+                            <td>
+                                Title for Module 3025
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Division</th>
+                            <td>
+                                3 - Finance
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Display Status</th>
+                            <td>
+                                <span class="label label-sm label-success">
+                                    Active
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Editing Status</th>
+                            <td>
+                                <span class="label label-sm label-warning">
+                                    Waiting for Approval
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Module Owner</th>
+                            <td>
+                                <a>1132093818</a>,
+                                <a>1483704273</a>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue-madison">
+            <div class="portlet-title">
+                <div class="caption">
+                    Module Content
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table">
+                    <tr>
+                        <th class="col-md-3">
+                            Preview Whole Module
+                        </th>
+                        <td class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" style="margin-bottom: 10px;">Preview Current Version</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary">Export Current Version</button>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="true">Preview Last Published Version</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" ng-disabled="true">Export Last Published Version</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Module Content
+                        </th>
+                        <td>
+                            <button class="btn btn-primary">Module Content</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue-madison">
+            <div class="portlet-title">
+                <div class="caption">
+                    Module History
+                </div>
+                <div class="tools">
+                    <a ui-sref="all-module-history" style="color: white">
+                        View All>>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table">
+                    <tr>
+                        <td class="col-md-3">
+                            22/7/2015 13:15pm
+                            <br />
+                            By <a>1483704273</a>
+                            (Zac Clinton)
+                        </td>
+                        <td class="col-md-9">
+                            - Submit Module Changes
+                            <br />
+                            Remarks: Change ...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            22/7/2015 13:10pm
+                            <br />
+                            By <a>1483704273</a>
+                            (Zac Clinton)
+                        </td>
+                        <td>
+                            - Edit Module
+                            <br />
+                            Module Content: Ch2.1 - Page2, Ch3.2 - Page 9
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <button type="button" class="btn btn-success" ng-click="open()">Approve</button>
+            <button type="button" class="btn btn-warning" ng-click="open()">Return for Amendment</button>
+            <button type="button" class="btn btn-danger" ng-click="open()">Reject</button>
+        </div>
+        <div style="margin-top: 10px;">
+            <button type="button" class="btn blue-madison" ng-disabled="true">Publish</button>
+            <button type="button" class="btn btn-default" ng-disabled="true">Delete</button>
+        </div>
+    </div>
+</div>

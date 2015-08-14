@@ -1,8 +1,8 @@
 'use strict';
 
-MetronicApp.controller('AccountManagementController', function($scope, $modal, HttpService) {
+MetronicApp.controller('AccountManagementController', function($scope) {
 	$scope.$on('$viewContentLoaded', function() {
-		userTable.init();
+		dataTableInit.init();
 	});
 
 	/*$scope.gridOptions = {
@@ -40,14 +40,14 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		}
 	};*/
 
-	$scope.add = function() {
+	/*$scope.add = function() {
 		delete $scope.requestError;
 		$scope.newUser = {};
 		$scope.modal = $modal.open({
 			templateUrl: 'views/addUserModal.html',
 			scope: $scope
 		});
-	}
+	}*/
 
 	/*$scope.edit = function() {
 		if ($scope.isRowSelected) {
@@ -75,7 +75,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		}
 	}*/
 
-	$scope.createUser = function() {
+	/*$scope.createUser = function() {
 		delete $scope.requestError;
 		var newUser = {
 			"LearnerId": $scope.newUser.userId,
@@ -89,7 +89,7 @@ MetronicApp.controller('AccountManagementController', function($scope, $modal, H
 		}, function(error) {
 			$scope.requestError = error.errorMessage || error.Message;
 		});
-	}
+	}*/
 
 	/*$scope.deleteUser = function(confirmed) {
 		delete $scope.requestError;

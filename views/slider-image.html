@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-show="! errorMessage">
     <div class="col-md-12">
         <table class="table" ng-show="uploader.queue.length">
             <thead>
@@ -43,7 +43,7 @@
             </tbody>
         </table>
         <div>
-            <div class="progress" ng-show="uploader.queue.length">
+            <div class="progress progress-striped" ng-class="{active: uploader.progress != 100}" ng-show="uploader.queue.length">
                 <div class="progress-bar" ng-style="{ 'width': uploader.progress + '%'}"></div>
             </div>
             <button type="button" class="btn btn-success" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">

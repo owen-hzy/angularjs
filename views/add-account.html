@@ -1,0 +1,116 @@
+<!--<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="$dismiss()">&times;</button>
+		<h4 class="modal-title">Create New User</h4>
+		<p>{{ requestError }}</p>
+	</div>
+	<form name="addUserForm" novalidate>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="id">UserId</label>
+				<input type="text" class="form-control" id="id" placeholder="Learner Id" ng-model="newUser.userId" required ng-maxlength="30" name="userid">
+				<p ng-show="addUserForm.userid.$error.maxlength" class="help-block">Max Length is 30</p>
+			</div>
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" id="username" placeholder="Username" ng-model="newUser.username" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" ng-model="newUser.password" required>
+			</div>
+			<div class="form-group">
+				<label for="role">UserRole</label>
+				<select class="form-control" id="role" ng-model="newUser.roles" multiple ng-options="role as role for role in userRoles" required></select>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-success" ng-click="createUser()" ng-disabled="addUserForm.$invalid">Create</button>
+			<button type="button" class="btn btn-danger" ng-click="$dismiss()">Cancel</button>
+		</div>
+	</form>
+</div>-->
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-user"></i> Add Account
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<form class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Learner ID</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Role</label>
+							<div class="col-md-9">
+								<select id="RoleSelection" class="form-control select2" multiple>
+										<option>Administrator</option>
+										<option>Module Owner</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Module</label>
+							<div class="col-md-9">
+								<select id="ModuleSelection" class="form-control select2" multiple>
+									<option>1-1111</option>
+									<option>2-3333</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Name</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Post Title</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Contact Phone</label>
+							<div class="col-md-9">
+								<input type="tel" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Contact Email</label>
+							<div class="col-md-9">
+								<input type="email" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Request Date</label>
+							<div class="col-md-9">
+								<div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy">
+									<input type="text" class="form-control" readonly />
+									<span class="input-group-btn">
+										<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button type="button" class="btn green">Save</button>
+								<a class="btn btn-default" ui-sref="account-management">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
