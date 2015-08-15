@@ -247,6 +247,16 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'EditModuleController'
         })
 
+        .state('module-content', {
+            url: '/module-content',
+            parent: 'home',
+            templateUrl: 'views/module-content.html',
+            data: {
+                title: 'Module Content'
+            },
+            controller: 'ModuleContentController'
+        })
+
         .state('user-guide', {
             url: '/user-guide',
             parent: 'home',

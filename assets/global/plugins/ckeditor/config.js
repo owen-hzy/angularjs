@@ -7,4 +7,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+    config.height = 500;
+    config.removePlugins = 'print, flash, elementspath, a11yhelp, about, scayt, wsc, language, save, magicline';
 };
