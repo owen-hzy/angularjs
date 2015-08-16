@@ -54,8 +54,7 @@ var ComponentsDropdowns = function () {
         });
 
         $('#DivisionSelection').select2({
-            placeholder: "Select a Division",
-            allowClear: true
+            placeholder: "Select a Division"
         });
 
         $('#DisplayStatusSelection').select2({

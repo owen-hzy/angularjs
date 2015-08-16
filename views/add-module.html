@@ -10,30 +10,24 @@
                 <form class="form-horizontal">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Module ID</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-md-3 control-label">Module Title</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="title">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Division</label>
                             <div class="col-md-9">
-                                <select id="DivisionSelection" class="form-control select2">
+                                <select id="DivisionSelection" class="form-control select2" ng-model="division">
                                     <option></option>
-                                    <option>Division1</option>
-                                    <option>Division2</option>
-                                    <option>Division3</option>
-                                    <option>Division4</option>
-                                    <option>Division5</option>
-                                    <option>Division6</option>
-                                    <option>Division7</option>
-                                    <option>Division8</option>
+                                    <option value="1">Division1</option>
+                                    <option value="2">Division2</option>
+                                    <option value="3">Division3</option>
+                                    <option value="4">Division4</option>
+                                    <option value="5">Division5</option>
+                                    <option value="6">Division6</option>
+                                    <option value="7">Division7</option>
+                                    <option value="8">Division8</option>
                                 </select>
                             </div>
                         </div>
@@ -41,9 +35,19 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" class="btn blue-madison">Save</button>
+                                <button type="button" class="btn blue-madison" ng-click="save()">Save</button>
                                 <a class="btn btn-default" ui-sref="all-modules">Cancel</a>
                             </div>
+                        </div>
+                        <div style="margin: 10px 0 0 0;" class="alert alert-success" ng-show="success">
+			                <span>
+				                {{ success }}
+			                </span>
+                        </div>
+                        <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+			                <span>
+				                {{ error }}
+			                </span>
                         </div>
                     </div>
                 </form>

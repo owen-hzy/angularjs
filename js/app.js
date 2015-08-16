@@ -223,7 +223,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {
                 title: 'Add Module'
             },
-            controller: 'ComponentController'
+            controller: 'ModuleAddController'
         })
 
         .state('module-information', {

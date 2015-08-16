@@ -6,7 +6,7 @@
                     Module Properties
                 </div>
                 <div class="tools">
-                    <a ui-sref="edit-module" style="color: white">
+                    <a href="#/edit-module/{{ module.moduleId }}" style="color: white">
                         Edit Properties>>
                     </a>
                 </div>
@@ -16,26 +16,26 @@
                         <tr>
                             <th class="col-md-3">Module ID</th>
                             <td class="col-md-9">
-                                3025
+                                {{ module.moduleId }}
                             </td>
                         </tr>
                         <tr>
                             <th>Module Title</th>
                             <td>
-                                Title for Module 3025
+                                {{ module.title }}
                             </td>
                         </tr>
                         <tr>
                             <th>Division</th>
                             <td>
-                                3 - Finance
+                                {{ module.divisionId }} - {{ module.divisionName }}
                             </td>
                         </tr>
                         <tr>
                             <th>Display Status</th>
                             <td>
                                 <span class="label label-sm label-success">
-                                    Active
+                                    {{ module.displayStatus }}
                                 </span>
                             </td>
                         </tr>
@@ -43,15 +43,16 @@
                             <th>Editing Status</th>
                             <td>
                                 <span class="label label-sm label-warning">
-                                    Waiting for Approval
+                                    {{ module.editStatus }}
                                 </span>
                             </td>
                         </tr>
                         <tr>
                             <th>Module Owner</th>
                             <td>
-                                <a>1132093818</a>,
-                                <a>1483704273</a>
+                                <span ng-repeat="owner in module.owners">
+                                    <a href="#/account/{{owner}}">{{owner}}</a>
+                                </span>
                             </td>
                         </tr>
                 </table>
@@ -84,10 +85,10 @@
                             </div>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="true">Preview Last Published Version</button>
+                                    <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="! module.isPublished">Preview Last Published Version</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary" ng-disabled="true">Export Last Published Version</button>
+                                    <button class="btn btn-primary" ng-disabled="! module.isPublished">Export Last Published Version</button>
                                 </div>
                             </div>
                         </td>
@@ -120,30 +121,19 @@
             </div>
             <div class="portlet-body">
                 <table class="table">
-                    <tr>
+                    <tr ng-repeat="history in moduleHistories">
                         <td class="col-md-3">
-                            22/7/2015 13:15pm
+                            {{ history.actionTime }}
                             <br />
-                            By <a>1483704273</a>
-                            (Zac Clinton)
+                            By <a>{{ history.learnerId }}</a>
+                            ({{ history.username }})
                         </td>
                         <td class="col-md-9">
-                            - Submit Module Changes
+                            - {{ history.action }}
                             <br />
-                            Remarks: Change ...
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            22/7/2015 13:10pm
-                            <br />
-                            By <a>1483704273</a>
-                            (Zac Clinton)
-                        </td>
-                        <td>
-                            - Edit Module
-                            <br />
-                            Module Content: Ch2.1 - Page2, Ch3.2 - Page 9
+                            <span ng-show="history.remarks">
+                                Remarks: {{ history.remarks }}
+                            </span>
                         </td>
                     </tr>
                 </table>
