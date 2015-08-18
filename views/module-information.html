@@ -51,7 +51,7 @@
                             <th>Module Owner</th>
                             <td>
                                 <span ng-repeat="owner in module.owners">
-                                    <a href="#/account/{{owner}}">{{owner}}</a>
+                                    <a href="#/account-information/{{owner}}">{{owner}}</a>
                                 </span>
                             </td>
                         </tr>
@@ -77,10 +77,10 @@
                         <td class="col-md-9">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary" style="margin-bottom: 10px;">Preview Current Version</button>
+                                    <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="! currentVersionExist">Preview Current Version</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary">Export Current Version</button>
+                                    <button class="btn btn-primary" ng-disabled="! currentVersionExist">Export Current Version</button>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 10px;">
@@ -145,13 +145,13 @@
 <div class="row">
     <div class="col-md-12">
         <div>
-            <button type="button" class="btn btn-success" ng-click="open()">Approve</button>
-            <button type="button" class="btn btn-warning" ng-click="open()">Return for Amendment</button>
-            <button type="button" class="btn btn-danger" ng-click="open()">Reject</button>
+            <button type="button" class="btn btn-success" ng-click="open('Approve')" ng-disabled="(module.editStatus != 'Waiting for Approval') && (module.editStatus != 'Editing')">Approve</button>
+            <button type="button" class="btn btn-warning" ng-click="open('Return for Amendment')" ng-disabled="module.editStatus != 'Waiting for Approval'">Return for Amendment</button>
+            <button type="button" class="btn btn-danger" ng-click="open('Reject')" ng-disabled="module.editStatus != 'Waiting for Approval'">Reject</button>
         </div>
         <div style="margin-top: 10px;">
-            <button type="button" class="btn blue-madison" ng-disabled="true">Publish</button>
-            <button type="button" class="btn btn-default" ng-disabled="true">Delete</button>
+            <button type="button" class="btn blue-madison" ng-disabled="module.editStatus != 'Waiting for Publish'">Publish</button>
+            <button type="button" class="btn btn-default" ng-click="open('Delete')" ng-disabled="(module.displayStatus != 'Inactive') && module.owners.size != 0">Delete</button>
         </div>
     </div>
 </div>

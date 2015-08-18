@@ -8,7 +8,9 @@ var MetronicApp = angular.module('MetronicApp', [
     'ui.router',
     'ui.bootstrap',
     'ngCookies',
-    'angularFileUpload'
+    'angularFileUpload',
+    'ngSanitize',
+    'ui.select'
 ]);
 
 /********************************************
@@ -163,14 +165,14 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
         })
 
         // User-Management
-        .state('account-management', {
-            url: '/account-management',
+        .state('all-accounts', {
+            url: '/all-accounts',
             parent: 'home',
-            templateUrl: 'views/account-management.html',
+            templateUrl: 'views/all-accounts.html',
             data: {
-                title: 'Account Management'
+                title: 'All Accounts'
             },
-            controller: 'AccountManagementController'
+            controller: 'AccountController'
             /*resolve: {
                 users: function (HttpService, $q) {
                     var data = $q.defer();
@@ -186,6 +188,60 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             }*/
         })
 
+        .state('account-information', {
+            url: '/account-information/{learnerId}',
+            parent: 'home',
+            templateUrl: 'views/account-information.html',
+            data: {
+                title: 'Account Information'
+            },
+            controller: 'AccountInformationController',
+            resolve: {
+                account: function ($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/users/' + $stateParams.learnerId, 'GET', 5000, true)
+                        .then(function (response) {
+                            data.resolve(response);
+                        }, function (error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                }
+            }
+        })
+
+        .state('edit-account', {
+            url: '/edit-account/{learnerId}',
+            parent: 'home',
+            templateUrl: 'views/edit-account.html',
+            data: {
+                title: 'Edit Account',
+            },
+            controller: 'AccountEditController',
+            resolve: {
+                account: function ($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/users/' + $stateParams.learnerId, 'GET', 5000, true)
+                        .then(function (response) {
+                            data.resolve(response);
+                        }, function (error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                },
+                modules: function ($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/module/brief', 'GET', 5000, true)
+                        .then(function (response) {
+                            data.resolve(response);
+                        }, function (error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                }
+            }
+        })
+
         .state('add-account', {
             url: '/add-account',
             parent: 'home',
@@ -193,7 +249,19 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {
                 title: 'Add Account'
             },
-            controller: 'ComponentController'
+            controller: 'AccountAddController',
+            resolve: {
+                modules: function ($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/module/brief', 'GET', 5000, true)
+                        .then(function (response) {
+                            data.resolve(response);
+                        }, function (error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                }
+            }
         })
 
         .state('all-modules', {
@@ -223,7 +291,19 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {
                 title: 'Add Module'
             },
-            controller: 'ModuleAddController'
+            controller: 'ModuleAddController',
+            resolve: {
+                divisions: function($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/division/brief', 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                }
+            }
         })
 
         .state('module-information', {
@@ -234,7 +314,39 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Module Information',
                 title: 'Module Information'
             },
-            controller: 'ModuleInfoController'
+            controller: 'ModuleInfoController',
+            resolve: {
+                module: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/module/' + $stateParams.moduleId, 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                },
+                history3: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/module/' + $stateParams.moduleId + '/history3', 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                },
+                currentVersionExist: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/page/' + $stateParams.moduleId + '/exist', 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                }
+            }
         })
 
         .state('edit-module', {
@@ -244,7 +356,29 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             data: {
                 title: 'Edit Module'
             },
-            controller: 'EditModuleController'
+            controller: 'ModuleEditController',
+            resolve: {
+                module: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/module/' + $stateParams.moduleId, 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                },
+                divisions: function($q, HttpService) {
+                    var data = $q.defer();
+                    HttpService.sendRequest('/WebApi/api/protected/division/brief', 'GET', 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.reject(error);
+                        });
+                    return data.promise;
+                }
+            }
         })
 
         .state('module-content', {
@@ -328,6 +462,8 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
 
 /* Init global settings and run the app */
 MetronicApp.run(function ($rootScope, settings, $state) {
+    $rootScope.roles = ["Administrator", "ModuleOwner"];
+    $rootScope.displayStatus = ["Active", "Inactive"];
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$on("$stateChangeError", function (event, toState, toParas, fromState, fromParams, error) {
         event.preventDefault();

@@ -7,55 +7,51 @@
                 </div>
             </div>
             <div class="portlet-body form">
-                <form class="form-horizontal">
+                <form class="form-horizontal" name="moduleForm">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Module ID</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>Module ID</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" ng-model="module.moduleId">
+                                <input type="text" name="moduleId" class="form-control" ng-model="module.moduleId" required>
+                                <span class="help-block" ng-show="moduleForm.moduleId.$error.required">This field is Required</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Module Title</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>Module Title</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" ng-model="module.title">
+                                <input name="title" type="text" class="form-control" ng-model="module.title" required>
+                                <span class="help-block" ng-show="moduleForm.title.$error.required">This field is Required</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Division</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>Division</label>
                             <div class="col-md-9">
-                                <select id="DivisionSelection" class="form-control select2" ng-model="module.divisionId">
-                                    <option value="1">Division1</option>
-                                    <option value="2">Division2</option>
-                                    <option value="3">Division3</option>
-                                    <option value="4">Division4</option>
-                                    <option value="5">Division5</option>
-                                    <option value="6">Division6</option>
-                                    <option value="7">Division7</option>
-                                    <option value="8">Division8</option>
-                                </select>
+                                <ui-select theme="bootstrap" ng-model="module.selectedDivision">
+                                    <ui-select-match placeholder="Select a Division...">{{$select.selected.divisionId}} - {{$select.selected.divisionName}}</ui-select-match>
+                                    <ui-select-choices repeat="division in divisions">{{division.divisionId}} - {{division.divisionName}}</ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Display Status</label>
                             <div class="col-md-9">
-                                <select id="DisplayStatusSelection" class="form-control select2" ng-model="module.displayStatus">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                <ui-select theme="bootstrap" ng-model="module.displayStatus">
+                                    <ui-select-match placeholder="Select DisplayStatus...">{{$select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="displayStatus in $root.displayStatus">{{displayStatus}}</ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Editing Status</label>
-                            <div class="col-md-9">
+                            <div class="col-md-9" style="margin-top: 8px;">
                                 <span class="label label-warning">{{ module.editStatus }}</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Module Owner</label>
-                            <div class="col-md-9">
+                            <div class="col-md-9" style="margin-top: 8px;">
                                 <span ng-repeat="owner in module.owners">
-                                    <a href="#/account/{{owner}}">{{ owner }}</a>
+                                    <a href="#/account-information/{{owner}}">{{ owner }}</a>&nbsp; &nbsp;
                                 </span>
                             </div>
                         </div>
@@ -63,9 +59,14 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" class="btn blue-madison" ng-click="save()">Save</button>
-                                <a class="btn btn-default" ui-sref="module-information">Cancel</a>
+                                <button type="button" class="btn blue-madison" ng-click="save()" ng-disabled="(! moduleForm.$valid) || module.selectedDivision == null">Save</button>
+                                <a class="btn btn-default" href="#/module-information/{{module.moduleId}}">Cancel</a>
                             </div>
+                        </div>
+                        <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+			                <span>
+				                {{ error }}
+			                </span>
                         </div>
                     </div>
                 </form>

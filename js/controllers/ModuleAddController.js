@@ -1,20 +1,22 @@
 'use strict';
 
-MetronicApp.controller('ModuleAddController', function($scope, HttpService) {
-    $scope.$on('$viewContentLoaded', function () {
-        ComponentsDropdowns.init();
-    });
+MetronicApp.controller('ModuleAddController', function($scope, divisions, HttpService, $window) {
+
+
+    $scope.module = {};
+    $scope.divisions = divisions;
 
     $scope.save = function() {
         delete $scope.success;
         delete $scope.error;
         var data = {
-            "title": $scope.title,
-            "divisionId": $scope.division
+            "moduleId": $scope.module.moduleId,
+            "title": $scope.module.title,
+            "divisionId": $scope.module.division.divisionId
         };
 
-        HttpService.sendRequest("/WebApi/api/protected/module", "POST", 10000, true, data).then(function() {
-            $scope.success = "Saved";
+        HttpService.sendRequest("/WebApi/api/protected/module", "POST", 10000, true, data).then(function(data) {
+            $window.location.href = "#/module-information/" + data;
         }, function(error) {
             $scope.error = error.errorMessage || error.Message;
         })

@@ -1,35 +1,3 @@
-<!--<div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="$dismiss()">&times;</button>
-		<h4 class="modal-title">Create New User</h4>
-		<p>{{ requestError }}</p>
-	</div>
-	<form name="addUserForm" novalidate>
-		<div class="modal-body">
-			<div class="form-group">
-				<label for="id">UserId</label>
-				<input type="text" class="form-control" id="id" placeholder="Learner Id" ng-model="newUser.userId" required ng-maxlength="30" name="userid">
-				<p ng-show="addUserForm.userid.$error.maxlength" class="help-block">Max Length is 30</p>
-			</div>
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input type="text" class="form-control" id="username" placeholder="Username" ng-model="newUser.username" required>
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" placeholder="Password" ng-model="newUser.password" required>
-			</div>
-			<div class="form-group">
-				<label for="role">UserRole</label>
-				<select class="form-control" id="role" ng-model="newUser.roles" multiple ng-options="role as role for role in userRoles" required></select>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-success" ng-click="createUser()" ng-disabled="addUserForm.$invalid">Create</button>
-			<button type="button" class="btn btn-danger" ng-click="$dismiss()">Cancel</button>
-		</div>
-	</form>
-</div>-->
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box green">
@@ -39,61 +7,66 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form class="form-horizontal">
+				<form class="form-horizontal" name="accountForm" novalidate>
 					<div class="form-body">
 						<div class="form-group">
-							<label class="col-md-3 control-label">Learner ID</label>
+							<label class="col-md-3 control-label"><span class="required">* </span>Learner ID</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" name="learnerId" class="form-control" ng-model="account.learnerId" required>
+								<span class="help-block" ng-show="accountForm.learnerId.$error.required">This field is Required</span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Role</label>
+							<label class="col-md-3 control-label"><span class="required">* </span>Role</label>
 							<div class="col-md-9">
-								<select id="RoleSelection" class="form-control select2" multiple>
-										<option>Administrator</option>
-										<option>Module Owner</option>
-								</select>
+								<ui-select multiple theme="bootstrap" ng-model="account.roles" on-select="updateOnSelect($item)" on-remove="updateOnRemove($item)">
+									<ui-select-match placeholder="Select Roles...">{{$item}}</ui-select-match>
+									<ui-select-choices repeat="role in $root.roles">{{role}}</ui-select-choices>
+								</ui-select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Module</label>
 							<div class="col-md-9">
-								<select id="ModuleSelection" class="form-control select2" multiple>
-									<option>1-1111</option>
-									<option>2-3333</option>
-								</select>
+								<ui-select multiple theme="bootstrap" ng-model="account.modules" ng-disabled="! modules.length">
+									<ui-select-match placeholder="Select Modules...">{{$item.moduleId}} - {{$item.title}}</ui-select-match>
+									<ui-select-choices repeat="module in modules">
+										{{module.moduleId}} - {{module.title}}
+									</ui-select-choices>
+								</ui-select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Name</label>
+							<label class="col-md-3 control-label"><span class="required">* </span>Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" name="username" class="form-control" ng-model="account.username" required>
+								<span class="help-block" ng-show="accountForm.username.$error.required">This field is Required</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Post Title</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" ng-model="account.postTitle">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Contact Phone</label>
 							<div class="col-md-9">
-								<input type="tel" class="form-control">
+								<input type="tel" class="form-control" ng-model="account.contactPhone">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Contact Email</label>
+							<label class="col-md-3 control-label"><span class="required">* </span>Contact Email</label>
 							<div class="col-md-9">
-								<input type="email" class="form-control">
+								<input type="email" name="contactEmail" class="form-control" ng-model="account.contactEmail" required>
+								<span class="help-block" ng-show="accountForm.contactEmail.$invalid">Enter a valid email</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Request Date</label>
 							<div class="col-md-9">
-								<div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy">
-									<input type="text" class="form-control" readonly />
+								<div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-end-date="0d">
+									<input type="text" class="form-control" ng-model="account.requestDate" readonly />
 									<span class="input-group-btn">
 										<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
 									</span>
@@ -104,9 +77,14 @@
 					<div class="form-actions">
 						<div class="row">
 							<div class="col-md-offset-3 col-md-9">
-								<button type="button" class="btn green">Save</button>
-								<a class="btn btn-default" ui-sref="account-management">Cancel</a>
+								<button type="button" class="btn green" ng-click="save()" ng-disabled="(! accountForm.$valid) || account.roles.length == 0">Save</button>
+								<a class="btn btn-default" ui-sref="all-accounts">Cancel</a>
 							</div>
+						</div>
+						<div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+			                <span>
+				                {{ error }}
+			                </span>
 						</div>
 					</div>
 				</form>

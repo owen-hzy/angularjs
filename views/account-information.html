@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-sharp">
+            <div class="portlet-title">
+                <div class="caption">
+                    View User Profile
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th class="col-md-3">Learner ID</th>
+                        <td class="col-md-9">
+                            {{ account.learnerId }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Role</th>
+                        <td>
+                            <span ng-repeat="role in account.roles">{{ role }}<br /></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Module</th>
+                        <td>
+                            <span ng-repeat="module in account.modules">
+                                <a href="#/module-information/{{module.moduleId}}">{{module.moduleId}} - {{ module.title }}</a>
+                                <br />
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>
+                            {{ account.username }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Post Title</th>
+                        <td>
+                            {{ account.postTitle }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact Phone</th>
+                        <td>
+                            {{ account.contactPhone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact Email</th>
+                        <td>
+                            {{ account.contactEmail }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Request Date</th>
+                        <td>
+                            {{ account.requestDate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>
+                            <a href="#/account-information/{{account.createdBy}}">{{ account.createdBy }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Created Date & Time</th>
+                        <td>
+                            {{ account.creationTime }}
+                        </td>
+                    </tr>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn green-sharp" href="#/edit-account/{{account.learnerId}}">Edit</a>
+                        <button type="button" class="btn btn-default" ng-click="open()">Delete</button>
+                    </div>
+                    <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+			                <span>
+				                {{ error }}
+			                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

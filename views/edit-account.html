@@ -1,0 +1,110 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-sharp">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i> Edit User Profile
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal" name="accountForm">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Learner ID</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{account.learnerId}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>Role</label>
+                            <div class="col-md-9">
+                                <ui-select multiple theme="bootstrap" ng-model="account.roles" on-select="updateOnSelect($item)" on-remove="updateOnRemove($item)">
+                                    <ui-select-match placeholder="Select Roles...">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="role in $root.roles">{{ role }}</ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Module</label>
+                            <div class="col-md-9">
+                                <ui-select multiple theme="bootstrap" ng-model="account.selectedModules" ng-disabled="! modules.length">
+                                    <ui-select-match placeholder="Select Modules...">{{$item.moduleId}} - {{$item.title}}</ui-select-match>
+                                    <ui-select-choices repeat="module in modules">
+                                        {{module.moduleId}} - {{module.title}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>Name</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" ng-model="account.username" name="username" required>
+                                <span class="help-block" ng-show="accountForm.username.$error.required">This field is Required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Post Title</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" ng-model="account.postTitle">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Contact Phone</label>
+                            <div class="col-md-9">
+                                <input type="tel" class="form-control" ng-model="account.contactPhone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>Contact Email</label>
+                            <div class="col-md-9">
+                                <input type="email" name="contactEmail" class="form-control" ng-model="account.contactEmail" required>
+                                <span class="help-block" ng-show="accountForm.contactEmail.$invalid">Enter a valid Email</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Request Date</label>
+                            <div class="col-md-9">
+                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-end-date="0d">
+                                    <input type="text" class="form-control" readonly value="{{account.requestDate}}"/>
+									<span class="input-group-btn">
+										<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Created By</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{account.createdBy}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Created Date & Time</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{account.creationTime}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" ng-click="save()" ng-disabled="(! accountForm.$valid) || account.roles.length == 0">Save</button>
+                                <a class="btn btn-default" href="#/account-information/{{ account.learnerId }}">Cancel</a>
+                            </div>
+                        </div>
+                        <div style="margin: 10px 0 0 0;" class="alert alert-success" ng-show="success">
+			                <span>
+				                {{ success }}
+			                </span>
+                        </div>
+                        <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+			                <span>
+				                {{ error }}
+			                </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

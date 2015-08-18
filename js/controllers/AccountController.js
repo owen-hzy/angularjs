@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('AccountManagementController', function($scope) {
+MetronicApp.controller('AccountController', function($scope) {
 	$scope.$on('$viewContentLoaded', function() {
 		dataTableInit.init();
 	});

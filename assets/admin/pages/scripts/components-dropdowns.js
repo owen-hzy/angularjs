@@ -2,40 +2,34 @@ var ComponentsDropdowns = function () {
 
     var handleSelect2 = function () {
 
-        $('#select2_sample1').select2({
-            placeholder: "Select an option",
-            allowClear: true
-        });
-
         $('#RoleSelection').select2({
             placeholder: "Select Roles",
             allowClear: true
         });
 
-        $('#ModuleSelection').select2({
-            placeholder: "Select Modules",
-            allowClear: true
+        var moduleData = $.ajax({
+           url: "/WebApi/api/protected/module",
+
         });
 
-        $("#select2_sample3").select2({
-            placeholder: "Select...",
+        $('#ModuleSelection').select2({
+            placeholder: "Select Modules",
             allowClear: true,
-            minimumInputLength: 1,
-            query: function (query) {
-                var data = {
-                    results: []
-                }, i, j, s;
-                for (i = 1; i < 5; i++) {
-                    s = "";
-                    for (j = 0; j < i; j++) {
-                        s = s + query.term;
-                    }
-                    data.results.push({
-                        id: query.term + i,
-                        text: s
-                    });
+            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "/WebApi/api/protected/module",
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to alter remote JSON data
+                    var modules = [];
+                    data.forEach(function(module) {
+                        modules.push({
+                            id: module.moduleId,
+                            title: module.title
+                        });
+                    })
+                    return {
+                        results: modules
+                    };
                 }
-                query.callback(data);
             }
         });
 
@@ -43,16 +37,6 @@ var ComponentsDropdowns = function () {
             if (!state.id) return state.text; // optgroup
             return "<img class='flag' src='" + Metronic.getGlobalImgPath() + "flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
         }
-        $("#select2_sample4").select2({
-            placeholder: "Select a Country",
-            allowClear: true,
-            formatResult: format,
-            formatSelection: format,
-            escapeMarkup: function (m) {
-                return m;
-            }
-        });
-
         $('#DivisionSelection').select2({
             placeholder: "Select a Division"
         });
@@ -63,10 +47,6 @@ var ComponentsDropdowns = function () {
         });
 
         $('#EditingStatusSelection').select2({
-        });
-
-        $("#select2_sample5").select2({
-            tags: ["red", "green", "blue", "yellow", "pink"]
         });
 
 
