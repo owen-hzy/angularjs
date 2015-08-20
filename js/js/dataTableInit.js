@@ -1,5 +1,38 @@
 var dataTableInit = function() {
     return {
+        initHistory: function(moduleId) {
+            jQuery("#historyTable").DataTable({
+                "lengthMenu": [10,25],
+                "ajax": {
+                    "url": "/WebApi/api/protected/module/" + moduleId + "/history",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {
+                        "data": "actionTime"
+                    },
+                    {
+                        "data": "learnerId",
+                        "render": function(data) {
+                            return "<a href=\"#/account-information/" + data + "\">" + data + "</a>";
+                        }
+                    },
+                    {
+                        "data": "username"
+                    },
+                    {
+                        "data": "action"
+                    },
+                    {
+                        "data": "remarks",
+                        "render": function(data) {
+                            return data || "";
+                        }
+                    }
+                ]
+            });
+        },
+
         init: function() {
             jQuery("#accountTable").DataTable({
                 "lengthMenu": [

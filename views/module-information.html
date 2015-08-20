@@ -6,7 +6,7 @@
                     Module Properties
                 </div>
                 <div class="tools">
-                    <a href="#/edit-module/{{ module.moduleId }}" style="color: white">
+                    <a href="#/edit-module/{{ module.moduleId }}" style="color: white" ng-class="{'disabled': module.editStatus == 'Waiting for Approval' || module.editStatus == 'Waiting for Publish'}">
                         Edit Properties>>
                     </a>
                 </div>
@@ -98,7 +98,8 @@
                             Module Content
                         </th>
                         <td>
-                            <a ui-sref="module-content" class="btn btn-primary">Module Content</a>
+                            <a href="#/module-content/{{module.moduleId}}" class="btn btn-primary" ng-disabled="(module.editStatus == 'Waiting for Approval')
+                            || (module.editStatus == 'Waiting for Publish')">Module Content</a>
                         </td>
                     </tr>
                 </table>
@@ -114,7 +115,7 @@
                     Module History
                 </div>
                 <div class="tools">
-                    <a ui-sref="all-module-history" style="color: white">
+                    <a href="#/module-history/{{module.moduleId}}" style="color: white">
                         View All>>
                     </a>
                 </div>
@@ -150,7 +151,7 @@
             <button type="button" class="btn btn-danger" ng-click="open('Reject')" ng-disabled="module.editStatus != 'Waiting for Approval'">Reject</button>
         </div>
         <div style="margin-top: 10px;">
-            <button type="button" class="btn blue-madison" ng-disabled="module.editStatus != 'Waiting for Publish'">Publish</button>
+            <button type="button" class="btn blue-madison" ng-disabled="module.editStatus != 'Waiting for Publish'" ng-click="open('Publish')">Publish</button>
             <button type="button" class="btn btn-default" ng-click="open('Delete')" ng-disabled="(module.displayStatus != 'Inactive') && module.owners.size != 0">Delete</button>
         </div>
     </div>

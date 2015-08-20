@@ -27,3 +27,19 @@ Rounded Portlets
 .templateCenter {
 	text-align: center;
 }
+
+a.disabled {
+	cursor: default;
+	pointer-events: none;
+	text-decoration: none;
+	display: none !important;
+}
+
+.page-header.navbar .page-logo .content-header-title {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.page-header.navbar .content-page-logo {
+	width: 350px;
+}

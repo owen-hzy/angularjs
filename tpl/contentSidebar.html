@@ -1,0 +1,75 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <!--<li class="heading">-->
+        <!--<h3>GENERAL</h3>-->
+        <!--</li>-->
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">Syonpsis</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">Acknowledgements</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="icon-plus"></i>
+                <span class="title">Chapters & Progress</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-repeat="chapter in $parent.chapterList" ng-class="{'active': chapter.active}">
+                    <a ng-click="$parent.page($index)" id="Ch{{$index}}">
+                        <i class="icon-arrow-right"></i>
+                        Ch {{chapter.chapter}}<span ng-show="chapter.subChapter">.</span>{{chapter.subChapter}}
+                        <span class="arrow" ng-show="chapter.pages.length > 0"></span>
+                    </a>
+                    <ul ng-show="chapter.pages.length > 0" class="sub-menu">
+                        <li ng-repeat="page in chapter.pages" ng-class="{'active': page.active}">
+                            <a ng-click="$parent.page($parent.$index, $index)">
+                                <i class="icon-arrow-right"></i>
+                                Page {{$index + 1}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">End Of Chapters Page</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">Glossary</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">Abbreviations</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="icon-arrow-right"></i>
+                <span class="title">Quiz</span>
+            </a>
+        </li>
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

@@ -1,4 +1,6 @@
-<div class="row">
+<h3 ng-show="! $parent.current.isPage">Please Select a Page to Edit</h3>
+
+<div ng-show="$parent.current.isPage" class="row">
     <div class="col-md-12">
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
@@ -8,6 +10,15 @@
             </div>
             <div class="portlet-body">
                 <div style="height:140px; overflow: auto;">
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="templateCenter">
+                            <label>
+                                <img src="../images/template_icon1.png" class="templateLibrary" />
+                                <input type="radio" name="templateSelection" value="0">
+                                Original
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="templateCenter">
                             <label>
@@ -31,7 +42,7 @@
                             <label>
                             <img src="../images/template_icon1.png" class="templateLibrary" />
                             <input type="radio" name="templateSelection" value="3">
-                                 Template
+                                 Chapter Cover
                             </label>
                         </div>
                     </div>
@@ -59,7 +70,7 @@
     </div>
 </div>
 
-<div class="row">
+<div ng-show="$parent.current.isPage" class="row">
     <div class="col-md-12">
         <div class="portlet light">
             <div class="portlet-title">
@@ -83,20 +94,39 @@
                     </div>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-md-6">
-                            <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="true">Preview Last Published Version</button>
+                            <button class="btn btn-primary" style="margin-bottom: 10px;" ng-disabled="! module.isPublished">Preview Last Published Version</button>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary" ng-disabled="true">Export Last Published Version</button>
+                            <button class="btn btn-primary" ng-disabled="! module.isPublished">Export Last Published Version</button>
                         </div>
                     </div>
                 </div>
-                <div style="margin-top: 10px;">
-                    <button type="button" class="btn btn-default">Save</button>
-                    <button type="button" class="btn btn-default">Cancel</button>
-                    <button type="button" class="btn btn-default">Add Page</button>
-                    <button type="button" class="btn btn-default">Delete</button>
-                </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <button type="button" class="btn" ng-click="save()" ng-disabled="(! $parent.current.isPage) && (! $parent.current.isChapter)">Save</button>
+            <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn" ng-disabled="(! $parent.current.isChapter) && (! $parent.current.isPage)" ng-click="$parent.addPage()">Add Page</button>
+            <button type="button" class="btn" ng-disabled="! $parent.current.isPage" ng-click="delete()">Delete</button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div style="margin: 10px 0 0 0;" class="alert alert-success" ng-show="success">
+            <span class="close" ng-click="close()"></span>
+            <span>
+                {{ success }}
+            </span>
+        </div>
+        <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+            <span class="close" ng-click="close()"></span>
+            <span>
+                {{ error }}
+            </span>
         </div>
     </div>
 </div>

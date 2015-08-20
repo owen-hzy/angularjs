@@ -59,7 +59,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" class="btn blue-madison" ng-click="save()" ng-disabled="(! moduleForm.$valid) || module.selectedDivision == null">Save</button>
+                                <button type="button" class="btn blue-madison" ng-click="save()" ng-disabled="(! moduleForm.$valid) || module.selectedDivision == null || module.editStatus == 'Waiting for Approval' || module.editStatus == 'Waiting for Publish'">Save</button>
                                 <a class="btn btn-default" href="#/module-information/{{module.moduleId}}">Cancel</a>
                             </div>
                         </div>

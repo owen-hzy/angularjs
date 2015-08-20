@@ -3,7 +3,7 @@
 // Set a httpService to control timeout and append token automatically if withToken is set to true
 MetronicApp.factory("HttpService", function($http, $q, $cookies){
 	return {
-		"sendRequest": function(url, method, timeoutMilliSeconds, withToken, data) {
+		"sendRequest": function(url, method, timeoutMilliSeconds, withToken, data, contentType) {
 			var timeoutPromise = $q.defer(),
 				isTimeout = false,
 				result = $q.defer();
@@ -23,7 +23,15 @@ MetronicApp.factory("HttpService", function($http, $q, $cookies){
 				config.data = data;
 			}
 			if (withToken) {
-				config.headers = { Authorization: 'Bearer ' + $cookies.get('token') };
+				config.headers = {Authorization: 'Bearer ' + $cookies.get('token')};
+			}
+
+			if (contentType) {
+				if (! config.headers) {
+					config.headers = {'Content-Type': contentType};
+				} else {
+					config.headers['Content-Type'] = contentType;
+				}
 			}
 
 			$http(config).success(function(data) {

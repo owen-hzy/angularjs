@@ -1,24 +1,24 @@
 <div class="modal-header" style="padding-bottom: 25px;">
     <span class="close" ng-click="$dismiss()"></span>
     <h4 class="modal-title">Specific Module Header</h4>
-    <span class="pull-right">Page 1 of 6</span>
+    <span class="pull-right">Page {{pageIndex}} of {{pageLength}}</span>
 </div>
-<div class="modal-body" style="margin: 0 10px 0 10px;">
-    <div class="row">
+<div class="modal-body" style="background: #e9ecf3;">
+    <div class="row" style="padding: 0 10px 0 10px;">
         <table style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="width: 30%;">
-                        <button class="btn btn-nav">
+                        <button class="btn btn-nav btn-default" ng-click="previous()" ng-disabled="previousOver">
                             <i class="fa fa-angle-left"></i>
                             <span>Previous</span>
                         </button>
                     </td>
                     <td style="width: 40%; text-align: center;">
-                        Title
+                        {{$parent.chapterList[currentIndex].chapterTitle}}<span ng-show="$parent.chapterList[currentIndex].subChapterTitle"> - </span>{{$parent.chapterList[currentIndex].subChapterTitle}}
                     </td>
                     <td>
-                        <button class="btn btn-nav pull-right">
+                        <button class="btn btn-nav btn-default pull-right" ng-click="next()" ng-disabled="nextOver">
                             <span>Next</span>
                             <i class="fa fa-angle-right"></i>
                         </button>
@@ -27,5 +27,5 @@
             </tbody>
         </table>
     </div>
-    <div style="height: 500px; margin-top: 10px; border-style: solid; border-width: 1px; border-color: darkgrey; padding: 0 10px 0 10px;" id="previewBox"></div>
+    <div style="background: #ffffff; height: 562px; width: 802px; margin: 10px 0 0 30px; border: 1px solid darkgrey" id="previewBox"></div>
 </div>

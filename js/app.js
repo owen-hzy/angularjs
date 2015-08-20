@@ -156,6 +156,11 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
             }
         })
 
+        .state('contentHome', {
+            templateUrl: 'views/contentHome.html',
+            controller: 'ModuleContentHomeController'
+        })
+
         // Dashboard
         .state('dashboard', {
             url: '/',
@@ -382,13 +387,55 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
         })
 
         .state('module-content', {
-            url: '/module-content',
-            parent: 'home',
+            url: '/module-content/{moduleId}',
+            parent: 'contentHome',
             templateUrl: 'views/module-content.html',
             data: {
                 title: 'Module Content'
             },
-            controller: 'ModuleContentController'
+            controller: 'ModuleContentController',
+            resolve: {
+                module: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest("/WebApi/api/protected/module/" + $stateParams.moduleId, "GET", 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                },
+                pages: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest("/WebApi/api/protected/page/" + $stateParams.moduleId, "GET", 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                },
+                chapters: function($q, HttpService, $stateParams) {
+                    var data = $q.defer();
+                    HttpService.sendRequest("/WebApi/api/protected/chapter/" + $stateParams.moduleId, "GET", 10000, true)
+                        .then(function(response) {
+                            data.resolve(response);
+                        }, function(error) {
+                            data.resolve(error);
+                        });
+                    return data.promise;
+                }
+            }
+        })
+
+        .state('module-history', {
+            url: '/module-history/{moduleId}',
+            parent: 'home',
+            templateUrl: 'views/all-history.html',
+            data: {
+                title: 'Module History'
+            },
+            controller: 'ModuleHistoryController'
         })
 
         .state('user-guide', {
@@ -464,6 +511,7 @@ MetronicApp.config(function ($stateProvider, $urlRouterProvider) {
 MetronicApp.run(function ($rootScope, settings, $state) {
     $rootScope.roles = ["Administrator", "ModuleOwner"];
     $rootScope.displayStatus = ["Active", "Inactive"];
+    $rootScope.chapterStatus = ['Inactive', 'Active & Mandatory', 'Active & Optional'];
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$on("$stateChangeError", function (event, toState, toParas, fromState, fromParams, error) {
         event.preventDefault();

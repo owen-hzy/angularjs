@@ -1,0 +1,44 @@
+<!-- BEGIN HEADER INNER -->
+<div class="page-header-inner">
+    <!-- BEGIN LOGO -->
+    <div class="page-logo content-page-logo">
+        <div class="logo-default content-header-title">
+            <span><b>Division:</b> {{$parent.module.divisionId}} - {{$parent.module.divisionName}}</span>
+            <br />
+            <span><b>Module:</b> {{$parent.module.title}} </span>
+        </div>
+        <div class="menu-toggler sidebar-toggler">
+            <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+        </div>
+    </div>
+
+    <!-- END LOGO -->
+    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+    </a>
+    <!-- END RESPONSIVE MENU TOGGLER -->
+
+    <div class="page-top" style="padding: 15px 20px 20px 0;" ng-show="$parent.current.isChapter">
+            <table class="pull-right">
+                <tr>
+                    <td>Chapter Title: </td>
+                    <td><input type="text" class="form-control" ng-model="$parent.current.chapterTitle"/></td>
+                </tr>
+                <tr>
+                    <td>Sub-chapter Title: </td>
+                    <td><input type="text" class="form-control" ng-model="$parent.current.subChapterTitle"/></td>
+                </tr>
+                <tr>
+                    <td>Sub-chapter Status: </td>
+                    <td>
+                        <ui-select theme="bootstrap" ng-model="$parent.current.status">
+                            <ui-select-match placeholder="Select Roles...">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="status in $root.chapterStatus">{{status}}</ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+            </table>
+    </div>
+
+</div>
+<!-- END HEADER INNER -->

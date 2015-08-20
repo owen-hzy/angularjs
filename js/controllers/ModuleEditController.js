@@ -3,6 +3,11 @@
 MetronicApp.controller('ModuleEditController', function($scope, module, divisions, HttpService, $window) {
 
     $scope.module = module;
+    (function() {
+        if (module.editStatus == 'Waiting for Approval' || module.editStatus == 'Waiting for Publish') {
+            $scope.error = 'Not Allowed to Edit When EditStatus is "Waiting for Approval" or "Waiting for Publish"';
+        }
+    })();
 
     $scope.module.selectedDivision = (function() {
         var divisionIds = $.map(divisions, function(value) {

@@ -8,11 +8,11 @@
             <div class="form-group" ng-show="action.action != 'Delete'">
                 <label class="col-md-3 control-label">Action</label>
                 <div class="col-md-9">
-                    <span class="label" ng-class="{'label-success': action.action == 'Approve',
+                    <span class="label" ng-class="{'label-success': action.action == 'Approve' || action.action == 'Publish',
                     'label-warning': action.action == 'Return for Amendment', 'label-danger': action.action == 'Reject'}">{{action.action}}</span>
                 </div>
             </div>
-            <div>
+            <div class="col-md-offset-3 col-md-9" style="padding-left: 0px;" ng-show="action.action == 'Delete'">
                 <h4>Are you sure to <span class="font-red-haze" style="font-weight: bold;">Delete</span> the whole module?</h4>
             </div>
             <div class="form-group">
@@ -24,14 +24,14 @@
         </div>
         <div class="form-actions">
             <div class="row">
-                <div class="col-md-offset-3 col-md-9">
+                <div class="col-md-12">
                     <button type="button" class="btn blue-madison" ng-click="confirm()">Confirm</button>
                     <button type="button" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
                 </div>
             </div>
-            <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="error">
+            <div style="margin: 10px 0 0 0;" class="alert alert-danger" ng-show="actionError">
                 <span>
-                    {{ error }}
+                    {{ actionError }}
                 </span>
             </div>
         </div>

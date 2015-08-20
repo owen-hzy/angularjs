@@ -49,9 +49,9 @@ Page Header
   border: 0px;
   padding: 0px;
   box-shadow: none;
-  height: 75px;
   min-height: 75px;
   filter: none;
+  position: relative;
   background-image: none;
   /* Fixed header */
   /* Header logo */
@@ -67,7 +67,6 @@ Page Header
     float: left;
     display: block;
     width: 265px;
-    height: 75px;
     padding-left: 20px;
     padding-right: 20px; }
     .page-header.navbar .page-logo > .logo-image,
@@ -83,7 +82,6 @@ Page Header
       padding-left: 20px;
       padding-top: 12px; }
   .page-header.navbar .page-top {
-    height: 75px;
     float: right; }
   .page-header.navbar .search-form {
     margin: 23px 20px 0 0;
@@ -628,8 +626,6 @@ Page container
     display: table; }
   .page-container:after {
     clear: both; }
-  .page-header-fixed .page-container {
-    margin-top: 75px; }
   .page-footer-fixed.page-footer-fixed-mobile .page-container {
     margin-bottom: 20px !important; }
 
