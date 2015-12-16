@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 			},
 			proxies: [{
 				context: ['/WebApi/api', '/WebApi/Uploads'],
-				host: 'localhost',
+				host: '192.168.0.233',
 				port: 8080
 			}],
 			livereload: {
